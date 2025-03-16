@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
     return (
-        <div style={{marginTop:'30px'}}>
+        <div style={{ marginTop: '30px' }}>
             <div class="sh-all-productAndSee-text-section">
                 <div class="sh-all-productAndSee-text-container">
                     <h3>All Produts</h3>
@@ -15,16 +16,14 @@ const Products = () => {
 
                     <div class="sh-daimond-container">
                         <div class="sh-daimond-product">
-                            <a href="html/productcs-discription.html"><img src=" https://kanerdul.com/public/product/67667f54159dc.jpg" alt="" /></a>
+                            <Link to={`/single/1`}><img src=" https://kanerdul.com/public/product/67667f54159dc.jpg" alt="" /></Link>
                         </div>
                         <div class="sh-product-discount-price">-38%</div>
-
-
                         <div class="sh-product-details">
                             <div class="sh-product-name">
-                                <a href="html/productcs-discription.html">
+                                <Link to={`/single/1`}>
                                     <h4>Pearl Heart Pendant 18k Gold Plated Necklace-414</h4>
-                                </a>
+                                </Link>
                             </div>
 
                             <div class="sh-products-prices">
