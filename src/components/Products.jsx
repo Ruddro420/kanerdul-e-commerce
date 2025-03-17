@@ -20,70 +20,39 @@ const Products = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         loadData();
     }, []);
 
     return (
         <div style={{ marginTop: '30px' }}>
-            <div className="sh-all-productAndSee-text-section">
-                <div className="sh-all-productAndSee-text-container">
-                    <h3>All Products</h3>
-                    <a href="#">See More</a>
-                </div>
-            </div>
-            {/* Products */}
-            <div className="sh-daimond-section">
-                <div className="sh-daimond-product-container">
+            <div class="container mx-auto px-8">
+                <h2 className='text-4xl font-semibold text-gray-800 py-8'>All Products</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {loading ? (
                         <div className="loader-container">
                             <div className="spinner"></div>
                             <p>Loading, please wait...</p>
                         </div>
                     ) : (
-                        <div className="sh-grid-container">
+                        <>
                             {data.map((item) => (
-                                <div key={item.id} className="sh-daimond-container">
-                                    <div className="sh-daimond-product">
-                                        <Link to={`/single/${item.id}`}>
-                                            <img src={item.image} alt={item.title} />
-                                        </Link>
-                                    </div>
-                                    <div className="sh-product-discount-price">-38%</div>
-                                    <div className="sh-product-details">
-                                        <div className="sh-product-name">
-                                            <Link to={`/single/${item.id}`}>
-                                                <h4>{item.title}</h4>
-                                            </Link>
-                                        </div>
-                                        <div className="sh-products-prices">
-                                            <div className="sh-less-price">
-                                                <p>৳ {item.price}</p>
-                                            </div>
-                                            <div className="sh-regular-price">
-                                                <p>৳ 2,500</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="sh-order-korun-button">
+                                <Link to={`/single/${item.id}`} key={item.id} class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+                                    <img class="w-full h-56 rounded-lg" src={item.image} alt="Product Image" />
+                                    <h3 class="text-xl font-semibold text-gray-800 mt-4">{item.title.substring(0, 18)} ...</h3>
+                                    <p class="text-sm text-gray-600 mt-1">{item.category}</p>
+                                    <p class="text-xl font-semibold text-gray-900 mt-2">$ {item.price}</p>
+                                    <div class="mt-4 flex justify-between items-center">
                                         <button
-                                            type="button"
-                                            className="sh-btn-style sh-btn-cartbg"
                                             onClick={() => addToCart(item)}
-                                        >
-                                            <i className="fa-solid fa-cart-plus"></i>
-                                        </button>
+                                            class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">Add to Cart</button>
                                         <button
-                                            className="sh-btn-style sh-btn-orderbg"
                                             onClick={() => orderNow(item)}
-                                            href="/html/order-now.html">
-                                            অর্ডার করুন
-                                        </button>
+                                            class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300">Order Now</button>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
-                        </div>
+                        </>
                     )}
                 </div>
             </div>
