@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const CartContext = createContext(); // ✅ Export Context
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -23,6 +25,7 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
     };
 
+    // add to cart
     const addToCart = (product) => {
         let updatedCart = [...cart];
         const existingProduct = updatedCart.find(item => item.id === product.id);
@@ -37,8 +40,27 @@ export const CartProvider = ({ children }) => {
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
     };
-     // ✅ Increase item quantity
-     const increaseQuantity = (id) => {
+
+    // add Order
+    const orderNow = (product) => {
+        let updatedCart = [...cart];
+        const existingProduct = updatedCart.find(item => item.id === product.id);
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+            toast.success("Cart Updated!");
+            navigate('/checkout')
+        } else {
+            updatedCart.push({ ...product, quantity: 1 });
+            toast.success("Product added to cart!");
+            navigate('/checkout')
+        }
+
+        setCart(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+    };
+
+    // ✅ Increase item quantity
+    const increaseQuantity = (id) => {
         const updatedCart = cart.map(item =>
             item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         );
@@ -57,7 +79,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, totalPrice,removeFromCart,increaseQuantity,decreaseQuantity }}>
+        <CartContext.Provider value={{ cart, addToCart, totalPrice, removeFromCart, increaseQuantity, decreaseQuantity ,orderNow}}>
             {children}
         </CartContext.Provider>
     );

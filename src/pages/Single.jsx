@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RelatedProduct from '../components/RelatedProduct';
+import { CartContext } from '../context/CartContext';
 
 const Single = () => {
     const { id } = useParams();
@@ -8,6 +9,8 @@ const Single = () => {
     const [loading, setLoading] = useState(true);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [relatedLoading, setRelatedLoading] = useState(true);
+    /* Context Loader */
+    const { addToCart, orderNow } = useContext(CartContext);
 
     const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -33,7 +36,7 @@ const Single = () => {
         try {
             const response = await fetch(`${BASE_URL}/products/category/${category}`);
             const result = await response.json();
-            
+
             // Exclude the current product from the related products
             const filteredProducts = result.filter(product => product.id !== parseInt(currentProductId));
             setRelatedProducts(filteredProducts);
@@ -69,21 +72,23 @@ const Single = () => {
                                 </div>
                                 <div className="orderBtn">
                                     <div className="orderBuy">
-                                        <a
+                                        <button
+                                            onClick={() => addToCart(data)}
                                             style={{ backgroundColor: '#DB991B', padding: '10px 20px', color: '#fff', textDecoration: 'none', borderRadius: '5px' }}
                                             href="order-now.html"
                                         >
-                                            অর্ডার করুন
-                                        </a>
-                                        <a
+                                            কার্টে যুক্ত করুন
+                                        </button>
+                                        <button
+                                            onClick={() => orderNow(data)}
                                             style={{ backgroundColor: '#198754', padding: '10px 20px', color: '#fff', textDecoration: 'none', borderRadius: '5px', marginLeft: '10px' }}
                                             href="order-now.html"
                                         >
-                                            Buy Now
-                                        </a>
+                                            অর্ডার করুন
+                                        </button>
                                     </div>
                                     <div className="callBtn">
-                                        <button>অর্ডার করতে কল করুন: 01720415286</button>
+                                        <button>সরাসরি কল করুন: 01720415286</button>
                                     </div>
                                 </div>
                                 <div className="productCode">
@@ -115,7 +120,7 @@ const Single = () => {
                         </div>
                         <br />
                     </div>
-                    
+
                     {/* Related Products */}
                     <RelatedProduct products={relatedProducts} loading={relatedLoading} />
                 </div>

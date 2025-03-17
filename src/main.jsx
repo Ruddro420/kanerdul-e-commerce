@@ -8,7 +8,9 @@ import MainLayout from "./layout/MainLayout.jsx";
 import Cart from "./pages/Cart.jsx";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "./context/CartContext.jsx";
+import Checkout from "./pages/Checkout.jsx";
 
+// Create router configuration using createBrowserRouter
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,15 +28,20 @@ const router = createBrowserRouter([
         path: "/cart",
         element: <Cart />,
       },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <CartProvider>
-    <StrictMode>
-      <RouterProvider router={router} />
-      <Toaster />
-    </StrictMode>
-  </CartProvider>
+  <StrictMode>
+    <RouterProvider router={router}>
+      <CartProvider>
+        <Toaster />
+      </CartProvider>
+    </RouterProvider>
+  </StrictMode>
 );
