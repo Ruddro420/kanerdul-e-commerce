@@ -9,6 +9,9 @@ import Cart from "./pages/Cart.jsx";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "./context/CartContext.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Account from "./pages/Account.jsx";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
 
 // Create router configuration using createBrowserRouter
 const router = createBrowserRouter([
@@ -32,7 +35,20 @@ const router = createBrowserRouter([
         path: "/checkout",
         element: <Checkout />,
       },
+      {
+        path: "/account",
+        element: <Account />,
+      },
+
     ],
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
