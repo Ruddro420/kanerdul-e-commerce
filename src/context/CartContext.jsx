@@ -8,6 +8,7 @@ export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [user, setUser] = useState(null);
+    const [order, setOrder] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -79,15 +80,19 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem("cart", JSON.stringify(updatedCart));
     };
     // user login or not
-
-   useEffect(() => {
+    useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
         setUser(user);
-   }, []);
+    }, []);
+    // user login or not
+    useEffect(() => {
+        const order = JSON.parse(localStorage.getItem("order"));
+        setOrder(order);
+    }, []);
 
 
     return (
-        <CartContext.Provider value={{setUser, cart, addToCart, totalPrice, removeFromCart, increaseQuantity, decreaseQuantity, orderNow,user }}>
+        <CartContext.Provider value={{ order, setCart, setUser, cart, addToCart, totalPrice, removeFromCart, increaseQuantity, decreaseQuantity, orderNow, user }}>
             {children}
         </CartContext.Provider>
     );

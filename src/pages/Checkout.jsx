@@ -1,39 +1,52 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const Checkout = () => {
-  const { totalPrice } = useContext(CartContext);
+  const { totalPrice, setCart } = useContext(CartContext);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+
   // checkout if localstorage data avaiable or not users
-  const checkOut = () => {
-
+  const checkOut = (e) => {
+    e.preventDefault()
     const user = JSON.parse(localStorage.getItem("user")); // Get logged-in user
-
-    if (user.user.email) {
+    if (user) {
       const productDetails = JSON.parse(localStorage.getItem("cart")) || []; // Get cart data
       const order = {
         userId: user.uid, // Store user ID
         products: productDetails,
         orderDate: new Date().toISOString(),
+        formData: formData,
+        totalPrice: totalPrice,
+        paymentMethod: 'Cash On Delivery'
       };
-
       // Store order in localStorage (or send it to the backend)
       localStorage.setItem("order", JSON.stringify(order));
-
-      alert("Your Order is Placed Successfully");
-      // navigate("/order-success"); // Redirect to order success page
+      toast.success("Your Order is Placed Successfully");
+      setCart('')
+      localStorage.removeItem("cart");
+      navigate("/order-success"); // Redirect to order success page
     } else {
       toast.error("Please login to place an order");
-      navigate("/checkout"); // Redirect to login page
+      navigate("/login"); // Redirect to login page
     }
   };
 
   return (
     <>
       <section class="bg-white py-8 antialiased">
-        <form action="#" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <form onSubmit={checkOut} class="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
             <div class="min-w-0 flex-1 space-y-8">
               <div class="space-y-4">
@@ -42,24 +55,36 @@ const Checkout = () => {
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 rounded-lg border border-gray-200 p-5">
                   <div>
                     <label for="your_name" class="mb-2 block text-sm font-medium text-gray-900 "> Your name * </label>
-                    <input type="text" id="your_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" placeholder="Bonnie Green" required />
+                    <input
+                      name='name'
+                      onChange={handleChange}
+                      type="text" id="your_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" placeholder="Bonnie Green" required />
                   </div>
 
                   <div>
                     <label for="your_email" class="mb-2 block text-sm font-medium text-gray-900 "> Your email* </label>
-                    <input type="email" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="name@flowbite.com" required />
+                    <input
+                      name='email'
+                      onChange={handleChange}
+                      type="email" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="name@flowbite.com" required />
                   </div>
                   <div>
                     <div class="mb-2 flex items-center gap-2">
                       <label for="select-city-input-3" class="block text-sm font-medium text-gray-900 "> Address * </label>
                     </div>
-                    <input type="text" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="Rangpur" required />
+                    <input
+                      name='address'
+                      onChange={handleChange}
+                      type="text" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="Rangpur" required />
                   </div>
 
                   <div>
                     <label for="phone-input-3" class="mb-2 block text-sm font-medium text-gray-900 "> Phone Number* </label>
                     <div class="flex items-center">
-                      <input type="number" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="Phone" required />
+                      <input
+                        name='phone'
+                        onChange={handleChange}
+                        type="number" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="Phone" required />
                     </div>
                   </div>
                 </div>
@@ -118,8 +143,7 @@ const Checkout = () => {
 
               <div class="space-y-3">
                 <button
-                  onClick={checkOut}
-                  type="submit" class="flex w-full items-center justify-center rounded-lg bg-[#2A59FF] px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 ">Proceed to Payment</button>
+                  type="submit" class="cursor-pointer flex w-full items-center justify-center rounded-lg bg-[#2A59FF] px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 ">Proceed to Payment</button>
 
                 <p class="text-sm font-normal text-gray-500 ">One or more items in your cart require an account. <Link to="/login" title="" class="font-medium text-primary-700 underline hover:no-underline ">Sign in or create an account now.</Link>.</p>
               </div>

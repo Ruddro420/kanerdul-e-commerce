@@ -12,6 +12,7 @@ import Checkout from "./pages/Checkout.jsx";
 import Account from "./pages/Account.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
+import OrderSuccess from "./pages/OrderSuccess.jsx";
 
 // Create router configuration using createBrowserRouter
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/account",
         element: <Account />,
+      },
+      {
+        path: "/order-success",
+        element: <OrderSuccess />,
       },
 
     ],
