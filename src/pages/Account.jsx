@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
-    const { setUser } = useContext(CartContext);
+    const { setUser, order } = useContext(CartContext);
 
     const navigate = useNavigate()
 
@@ -21,6 +21,9 @@ const Account = () => {
             console.error("Logout error:", error.message);
         }
     };
+
+    console.log(order);
+
     return (
         <div>
             <section class="bg-white py-8 antialiased md:py-8">
@@ -32,13 +35,15 @@ const Account = () => {
                                 <div class="flex space-x-4">
                                     <img class="h-16 w-16 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png" alt="Helene avatar" />
                                     <div>
-                                        <span class="mb-2 inline-block rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800"> PRO Account </span>
-                                        <h2 class="flex items-center text-xl font-bold leading-none text-gray-900  sm:text-2xl">Helene Engels</h2>
+
+                                        <h2 class="flex items-center text-xl font-bold leading-none text-gray-900  sm:text-2xl pt-5">{order.formData
+                                            && order.formData.name}</h2>
                                     </div>
                                 </div>
                                 <dl class="">
                                     <dt class="font-semibold text-gray-900 ">Email Address</dt>
-                                    <dd class="text-gray-500 ">helene@example.com</dd>
+                                    <dd class="text-gray-500 ">{order.formData
+                                        && order.formData.email}</dd>
                                 </dl>
                                 <dl>
                                     <dt class="font-semibold text-gray-900 ">Home Address</dt>
@@ -46,14 +51,16 @@ const Account = () => {
                                         <svg class="hidden h-5 w-5 shrink-0 text-gray-400  lg:inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5" />
                                         </svg>
-                                        2 Miles Drive, NJ 071, New York, United States of America
+                                        {order.formData
+                                            && order.formData.address}
                                     </dd>
                                 </dl>
                             </div>
                             <div class="space-y-4">
                                 <dl>
                                     <dt class="font-semibold text-gray-900 ">Phone Number</dt>
-                                    <dd class="text-gray-500 ">+1234 567 890 / +12 345 678</dd>
+                                    <dd class="text-gray-500 ">{order.formData
+                                        && order.formData.phone}</dd>
                                 </dl>
 
                                 <dl>
@@ -69,8 +76,8 @@ const Account = () => {
                                         </div>
                                         <div>
                                             <div class="text-sm">
-                                                <p class="mb-0.5 font-medium text-gray-900 ">Visa ending in 7658</p>
-                                                <p class="font-normal text-gray-500 ">Expiry 10/2024</p>
+                                                <p class="mb-0.5 font-medium text-gray-900 ">{order.paymentMethod}</p>
+                                                <p class="font-normal text-gray-500 ">{order.orderDate} </p>
                                             </div>
                                         </div>
                                     </dd>
@@ -92,7 +99,7 @@ const Account = () => {
                             <dl class="w-1/2 sm:w-48">
                                 <dt class="text-base font-medium text-gray-500 ">Order ID:</dt>
                                 <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                                    <a href="#" class="hover:underline">#FWB12546798</a>
+                                    <a href="#" class="hover:underline">#2A59FF</a>
                                 </dd>
                             </dl>
 
@@ -126,6 +133,7 @@ const Account = () => {
                                 </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>

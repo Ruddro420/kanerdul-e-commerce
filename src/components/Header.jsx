@@ -1,27 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 
 const Header = () => {
     const { cart, user } = useContext(CartContext);
-    console.log(user?.user.uid);
+
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+    // Fetch data
+    const loadData = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/products/categories`);
+            const result = await response.json();
+            setData(result);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
 
     return (
         <div>
-
             <header>
                 <div class="bg-gray-100 border-b border-gray-200">
                     <div class="px-4 mx-auto sm:px-6 lg:px-8">
                         <nav class="relative flex items-center justify-between h-16 lg:h-20">
-                            <div class="hidden lg:flex lg:items-center lg:space-x-10">
-                                <a href="#" title="" class="text-base font-medium text-black"> Features </a>
-
-                                <a href="#" title="" class="text-base font-medium text-black"> Solutions </a>
-
-                                <a href="#" title="" class="text-base font-medium text-black"> Resources </a>
-
-                                <a href="#" title="" class="text-base font-medium text-black"> Pricing </a>
+                            <div class="hidden lg:flex lg:items-center lg:space-x-7">
+                                {data.map(item => {
+                                    return (
+                                        <>
+                                            <Link style={{ textTransform: 'capitalize' }} to={`/category/${item}`} class="text-base font-medium text-black">
+                                                {item}
+                                            </Link>
+                                        </>
+                                    )
+                                })}
                             </div>
 
                             <div class="lg:absolute lg:-translate-x-1/2 lg:inset-y-5 lg:left-1/2">

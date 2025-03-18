@@ -13,6 +13,8 @@ import Account from "./pages/Account.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import OrderSuccess from "./pages/OrderSuccess.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
+import CategoryProduct from "./pages/CategoryProduct.jsx";
 
 // Create router configuration using createBrowserRouter
 const router = createBrowserRouter([
@@ -37,12 +39,16 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
+        path: "/category/:id",
+        element: <CategoryProduct />,
+      },
+      {
         path: "/account",
-        element: <Account />,
+        element: <PrivateRoute><Account /></PrivateRoute>,
       },
       {
         path: "/order-success",
-        element: <OrderSuccess />,
+        element: <PrivateRoute><OrderSuccess /></PrivateRoute>,
       },
 
     ],
