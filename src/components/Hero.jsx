@@ -27,7 +27,7 @@ const Hero = () => {
 
   return (
     <div>
-      <div className="sh-add-slider-container">
+      <div className="sh-add-slider-container lg:mb-0 mb-10">
         <HeroHeader />
       </div>
 

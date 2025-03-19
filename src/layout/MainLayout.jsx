@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import { Outlet } from 'react-router-dom';
 import MainFooter from '../components/MainFooter';
@@ -7,10 +7,11 @@ import { CartProvider } from '../context/CartContext';
 import { Toaster } from 'react-hot-toast';
 
 const MainLayout = () => {
+      const [menuopen, setMenuOpen] = useState(false);
     return (
-        <div>
+        <div onClick={() => menuopen? setMenuOpen(false): ""}>
             <CartProvider>
-                <Header />
+                <Header menuopen={menuopen} setMenuOpen={setMenuOpen}/>
                 <ScrollToTop />
                 <Outlet />
                 <MainFooter />

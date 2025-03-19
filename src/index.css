@@ -51,3 +51,11 @@ body {
 .sh-add-slider-container img{
   width: 100%!important;
 }
+
+
+/*  */
+
+:root {
+    --swiper-theme-color: white !important;
+    --swiper-navigation-size: 50px !important;
+}
