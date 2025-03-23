@@ -69,6 +69,11 @@ const Header = ({ menuopen, setMenuOpen }) => {
                   })}
                 </div>
 
+                <div class="flex lg:hidden lg:items-center lg:space-x-7 justify-center mx-auto">
+                  <h1 className="text-black text-lg font-bold">Gadgetex</h1>
+                </div>
+                
+
                 <Link
                   to={"/cart"}
                   type="button"
