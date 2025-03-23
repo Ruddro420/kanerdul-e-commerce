@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import Loader from "./Loader";
+import ProductSection from "./ProductSection";
 
 const Products = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cartItems, setCartItems] = useState(new Set());
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const { addToCart, orderNow, cart } = useContext(CartContext);
+  const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
 
   // Fetch data
   const loadData = async () => {
@@ -26,22 +27,17 @@ const Products = () => {
     loadData();
   }, []);
 
-  // Update cart items when cart changes
-  useEffect(() => {
-    const cartItemIds = new Set(cart.map((item) => item.id));
-    setCartItems(cartItemIds);
-  }, [cart]);
 
   return (
-    <div style={{ marginTop: "30px" }}>
-      <div className="container mx-auto px-8">
-        <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">
+    <div style={{ marginTop: "50px" }}>
+      <div className="container mx-auto lg:px-8 px-2">
+        <div className="mb-4 flex lg:px-10 items-center justify-between gap-4 md:mb-8">
           <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
             All Products
           </h2>
           <a
             href="#"
-            className="flex items-center text-base font-medium text-blue-700 hover:underline"
+            className="flex items-center text-base font-medium text-gray-900 hover:underline"
           >
             See more products
             <svg
@@ -63,65 +59,7 @@ const Products = () => {
             </svg>
           </a>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:px-10">
-          {loading ? (
-            <div className="loader-container">
-              <div className="spinner"></div>
-              <p>Loading, please wait...</p>
-            </div>
-          ) : (
-            <>
-              {data.map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-white border-1 border-gray-100 p-6 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-100"
-                >
-                  <Link to={`/single/${item.id}`}>
-                    <img
-                      className="w-full h-48 rounded-lg"
-                      src={item.image}
-                      alt="Product Image"
-                    />
-                  </Link>
-                  <Link to={`/single/${item.id}`}>
-                    <h3 className="text-xl font-semibold text-gray-800 mt-4">
-                      {item.title.substring(0, 18)} ...
-                    </h3>
-                  </Link>
-                  <p className="text-sm text-gray-600 mt-1">{item.category}</p>
-                  <p className="text-xl font-semibold text-gray-900 mt-2">
-                    $ {item.price}
-                  </p>
-                  <div className="mt-4 flex flex-col gap-2 items-stretch">
-                    {cartItems.has(item.id) ? (
-                      <Link
-                        to="/cart"
-                        className="bg-blue-100 text-center text-blue-800 py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
-                      >
-                        View Cart
-                      </Link>
-                    ) : (
-                      <button
-                        onClick={() => addToCart(item)}
-                        className="bg-blue-100 text-blue-800 py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
-                      >
-                        Add to Cart
-                      </button>
-                    )}
-
-                    <button
-                      onClick={() => orderNow(item)}
-                      className="bg-[#00A651] text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 cursor-pointer"
-                    >
-                      Order Now
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
-        </div>
+        <ProductSection loading={loading} data={data[0]}/>
       </div>
     </div>
   );

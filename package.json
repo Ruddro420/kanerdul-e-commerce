@@ -1,5 +1,6 @@
 {
   "name": "kanerdull",
+  "homepage": "https://gadgetextreme.com",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
+    "axios": "^1.8.4",
     "firebase": "^11.4.0",
     "jquery": "^3.7.1",
     "owl.carousel": "^2.3.4",

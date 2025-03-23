@@ -59,3 +59,7 @@ body {
     --swiper-theme-color: white !important;
     --swiper-navigation-size: 50px !important;
 }
+
+.penthrough{
+  text-decoration: line-through;
+}

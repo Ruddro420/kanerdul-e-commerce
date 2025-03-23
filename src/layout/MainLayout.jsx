@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast';
 const MainLayout = () => {
       const [menuopen, setMenuOpen] = useState(false);
     return (
-        <div onClick={() => menuopen? setMenuOpen(false): ""}>
+        <div className='lg:pt-20 pt-16' onClick={() => menuopen? setMenuOpen(false): ""}>
             <CartProvider>
                 <Header menuopen={menuopen} setMenuOpen={setMenuOpen}/>
                 <ScrollToTop />

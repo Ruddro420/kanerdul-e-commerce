@@ -1,4 +1,6 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -7,6 +9,10 @@ const Checkout = () => {
   const { totalPrice, setCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
+  const [getUser, setGetUser] = useState('');
+  const [orderData, setOrderData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -15,33 +21,115 @@ const Checkout = () => {
       [name]: value,
     }));
   };
+  
+  useEffect(() =>{
+    const user = JSON.parse(localStorage.getItem("user"));
+    setGetUser(user?.user)
+  },[])
 
+  /* number validator */
+  const validateBangladeshiPhoneNumber = (phone) => {
+    const regex = /^(?:\+8801|01)\d{9}$/;
+    return regex.test(phone);
+  };
 
   // checkout if localstorage data avaiable or not users
-  const checkOut = (e) => {
-    e.preventDefault()
-    const user = JSON.parse(localStorage.getItem("user")); // Get logged-in user
-    if (user) {
-      const productDetails = JSON.parse(localStorage.getItem("cart")) || []; // Get cart data
-      const order = {
-        userId: user.uid, // Store user ID
-        products: productDetails,
-        orderDate: new Date().toISOString(),
-        formData: formData,
-        totalPrice: totalPrice,
-        paymentMethod: 'Cash On Delivery'
-      };
-      // Store order in localStorage (or send it to the backend)
-      localStorage.setItem("order", JSON.stringify(order));
-      toast.success("Your Order is Placed Successfully");
-      setCart('')
-      localStorage.removeItem("cart");
-      navigate("/order-success"); // Redirect to order success page
-    } else {
-      toast.error("Please login to place an order");
-      navigate("/login"); // Redirect to login page
+  const checkOut = async (e) => {
+    e.preventDefault();
+  
+    const productDetails = JSON.parse(localStorage.getItem("cart")) || [];
+  
+    // Determine the phone number to validate
+    const phone = getUser ? (orderData?.phone || formData.phone) : formData.phone;
+  
+    // Validate phone number
+    if (!validateBangladeshiPhoneNumber(phone)) {
+      toast.error("Invalid Bangladeshi phone number. Please use the format +8801XXXXXXXXX or 01XXXXXXXXX.");
+      return;
+    }
+  
+    // Check if all required fields are filled for guest users
+    if (!getUser && (!formData.name || !formData.email || !formData.address || !formData.phone)) {
+      toast.error("Please fill out all required fields.");
+      return;
+    }
+  
+    // Show confirmation alert for guest users
+    if (!getUser) {
+      const confirmCheckout = window.confirm(
+        "\nDo you want to order without an account?\n"
+      );
+  
+      if (!confirmCheckout) {
+        return; // Stop the checkout process if the user cancels
+      }
+    }
+  
+    // Prepare the order object
+    const order = {
+      user_id: getUser ? getUser.uid : null, // Use null for guest users
+      cart: productDetails,
+      name: getUser ? (orderData?.name || getUser.displayName) : formData.name,
+      email: getUser ? getUser.email : formData.email,
+      address: getUser ? (orderData?.address || formData.address) : formData.address,
+      phone: getUser ? (orderData?.phone || formData.phone) : formData.phone,
+      total_price: totalPrice,
+      p_method: 'Cash On Delivery'
+    };
+  
+    try {
+      // Send order to backend (if available)
+      const response = await fetch(`${BASE_URL}/order/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order)
+      });
+  
+      if (response.ok) {
+        localStorage.setItem("order", JSON.stringify(order));
+        toast.success("Your Order is Placed Successfully");
+  
+        setCart('');
+        localStorage.removeItem("cart");
+  
+        navigate("/order-success");
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Order placement failed");
+      }
+    } catch (error) {
+      toast.error("Failed to place your order, please try again later.");
     }
   };
+
+
+  /* prvious order info loading */
+  const loadData = async () => {
+    if (!getUser?.uid) return; // Prevent fetching with invalid user
+    try {
+      const response = await fetch(`${BASE_URL}/order/${getUser.uid}`);
+      if (!response.ok) throw new Error("Failed to fetch");
+      const result = await response.json();
+      setOrderData(result?.data[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (getUser?.uid) {
+      loadData();
+    }
+  }, [getUser, BASE_URL]);
+
+  
+
+  /* ---------- */
+  
 
   return (
     <>
@@ -58,7 +146,8 @@ const Checkout = () => {
                     <input
                       name='name'
                       onChange={handleChange}
-                      type="text" id="your_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" placeholder="Bonnie Green" required />
+                      {...orderData?.name && { value: orderData?.name }}
+                      type="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500" placeholder="Bonnie Green" required />
                   </div>
 
                   <div>
@@ -66,7 +155,8 @@ const Checkout = () => {
                     <input
                       name='email'
                       onChange={handleChange}
-                      type="email" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="name@flowbite.com" required />
+                      value={getUser?.email}
+                      type="email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="name@flowbite.com" required />
                   </div>
                   <div>
                     <div class="mb-2 flex items-center gap-2">
@@ -74,6 +164,7 @@ const Checkout = () => {
                     </div>
                     <input
                       name='address'
+                      {...orderData?.name && { value: orderData.address }}
                       onChange={handleChange}
                       type="text" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="Rangpur" required />
                   </div>
@@ -84,6 +175,7 @@ const Checkout = () => {
                       <input
                         name='phone'
                         onChange={handleChange}
+                        {...orderData?.name && { value: orderData.phone }}
                         type="number" id="your_email" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 " placeholder="Phone" required />
                     </div>
                   </div>
@@ -116,10 +208,10 @@ const Checkout = () => {
                 <div class="-my-3 divide-y divide-gray-200 ">
                   <dl class="flex items-center justify-between gap-4 py-3">
                     <dt class="text-base font-normal text-gray-500 ">Subtotal</dt>
-                    <dd class="text-base font-medium text-gray-900 ">$ {totalPrice}</dd>
+                    <dd class="text-base font-medium text-gray-900 ">৳ {totalPrice}</dd>
                   </dl>
 
-                  <dl class="flex items-center justify-between gap-4 py-3">
+                  {/* <dl class="flex items-center justify-between gap-4 py-3">
                     <dt class="text-base font-normal text-gray-500 ">Savings</dt>
                     <dd class="text-base font-medium text-green-500">00</dd>
                   </dl>
@@ -132,11 +224,11 @@ const Checkout = () => {
                   <dl class="flex items-center justify-between gap-4 py-3">
                     <dt class="text-base font-normal text-gray-500 ">Tax</dt>
                     <dd class="text-base font-medium text-gray-900 ">00</dd>
-                  </dl>
+                  </dl> */}
 
                   <dl class="flex items-center justify-between gap-4 py-3">
                     <dt class="text-base font-bold text-gray-900 ">Total</dt>
-                    <dd class="text-base font-bold text-gray-900 ">$ {totalPrice}</dd>
+                    <dd class="text-base font-bold text-gray-900 ">৳ {totalPrice}</dd>
                   </dl>
                 </div>
               </div>

@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
     }, []);
     // / ✅ Calculate total price whenever the cart updates
     useEffect(() => {
-        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const total = cart.reduce((sum, item) => sum + item.selling_price * item.quantity, 0);
         setTotalPrice(total);
     }, [cart]);
     // ✅ Remove item from cart
