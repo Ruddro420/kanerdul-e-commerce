@@ -31,7 +31,7 @@ const Checkout = () => {
   };
 
   const calculateDeliveryCharge = (city) => {
-    return city === "ঢাকা" ? 50 : 100;
+    return city === "ঢাকা" ? 70 : 120;
   };
 
   useEffect(() => {

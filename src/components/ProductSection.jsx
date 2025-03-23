@@ -72,7 +72,7 @@ const ProductSection = ({ loading, data, className }) => {
                       onClick={() => handleAddToCart(item)}
                       className="bg-blue-100 text-blue-800 py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
                     >
-                      Add to Cart
+                     কার্টে রাখুন
                     </button>
                   )}
 
@@ -80,7 +80,7 @@ const ProductSection = ({ loading, data, className }) => {
                     onClick={() => orderNow(item)}
                     className="bg-[#00A651] text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 cursor-pointer"
                   >
-                    Order Now
+                    অর্ডার করুন
                   </button>
                 </div>
               </div>
@@ -134,7 +134,7 @@ const ProductSection = ({ loading, data, className }) => {
             to="/checkout"
             className="block w-full text-center bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition"
           >
-            Checkout
+            চেকআউট করুন
           </Link>
         </div>
       </div>

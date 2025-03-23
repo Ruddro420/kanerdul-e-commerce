@@ -77,7 +77,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 </div>
 
                 <div class="flex lg:hidden ">
-                  <h1 className="text-black text-lg font-bold">Gadgetex</h1>
+                  <h1 className="text-black text-lg font-bold">Gadgetextreme</h1>
                 </div>
                 
 
