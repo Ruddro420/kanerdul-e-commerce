@@ -53,6 +53,13 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 </div>
 
                 <div class="hidden lg:flex lg:items-center lg:space-x-7">
+                <Link
+                          style={{ textTransform: "capitalize" }}
+                          to={`/`}
+                          class="text-base font-medium text-black"
+                        >
+                          Home
+                        </Link>
                   {data[0]?.map((item) => {
                     return (
                       <>
@@ -69,7 +76,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                   })}
                 </div>
 
-                <div class="flex lg:hidden lg:items-center lg:space-x-7 justify-center mx-auto">
+                <div class="flex lg:hidden ">
                   <h1 className="text-black text-lg font-bold">Gadgetex</h1>
                 </div>
                 
@@ -194,7 +201,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
           >
             <div class="px-4 mx-auto sm:px-6 lg:px-8">
               <div class="flex items-center justify-between">
-                <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">
+                <p class="text-md font-semibold tracking-widest text-gray-black uppercase">
                   Menu
                 </p>
 

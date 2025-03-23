@@ -4,6 +4,7 @@ import RelatedProduct from "../components/RelatedProduct";
 import { CartContext } from "../context/CartContext";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { RiMessengerLine } from "react-icons/ri";
+import { FaCartShopping } from "react-icons/fa6";
 
 const Single = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const Single = () => {
   const [loading, setLoading] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(true);
-
+  const[selectedImg, setSelectedImg]=useState("")
   const { addToCart, orderNow } = useContext(CartContext);
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
@@ -33,7 +34,7 @@ const Single = () => {
     }
   };
 
-  // console.log(data);
+  console.log(data);
   
 
   const loadRelatedProducts = async (select_category, currentProductId) => {
@@ -56,7 +57,9 @@ const Single = () => {
     loadData();
   }, [id]);
 
-  //console.log(relatedProducts);
+  console.log(data?.image_gallary?.map((item) => (
+    item
+)));
   
 
   return (
@@ -75,9 +78,20 @@ const Single = () => {
                   <div className="h-[460px] rounded-lg bg-gray-300 mb-4">
                     <img
                       className="w-full h-full"
-                      src={`${IMAGE_URL}/admin/product/${data.product_image}`}
+                      src=
+{selectedImg ? (`${IMAGE_URL}/admin/product/gallery/${selectedImg}`):
+ (data.product_image?(`${IMAGE_URL}/admin/product/${data.product_image}`):"/Placeholder.svg")}
                       alt="Product"
                     />
+                  </div>
+                  <div className="flex gap-4">
+                    {data?.image_gallary?.map((item, i) => (
+                       <button onClick={() =>setSelectedImg(item)}  className="w-1/4 h-auto cursor-pointer hover:shadow-sm"  key={i}> <img
+                       src={`${IMAGE_URL}/admin/product/gallery/${item}`}
+                       alt="Product"
+                       /></button>
+                    ))}
+                   
                   </div>
                 </div>
                 <div className="md:flex-1 px-4">
@@ -102,7 +116,7 @@ const Single = () => {
                       Product Description:
                     </span>
                     <p className="text-gray-600 text-sm mt-2">
-                      {data.product_description}
+                      {data.p_short_des}
                     </p>
                   </div>
                   <div className="flex -mx-2 mb-4 pt-8">
@@ -123,6 +137,15 @@ const Single = () => {
                       </button>
                     </div>
                   </div>
+                  <div className="w-full flex gap-2 my-4">
+                    <button onClick={() => orderNow(data)}
+                      className="w-full bg-black text-white py-2 px-4  font-bold hover:bg-gray-900 cursor-pointer flex gap-2 justify-center items-center"
+                    >
+                    <FaCartShopping size={25} /> ক্যাশ অন ডেলিভারিতে অর্ডার করুণ
+
+
+                    </button>
+                  </div>
                   <div className="w-full flex gap-2">
                     <Link
                     target="_blank"
@@ -141,8 +164,17 @@ const Single = () => {
 
                     </Link>
                   </div>
+                 
                 </div>
               </div>
+
+              <div className="lg:py-8">
+                <div className="text-2xl font-bold text-gray-800">Description</div>
+            {data.product_description}
+          </div>
+
+
+
             </div>
           </div>
 

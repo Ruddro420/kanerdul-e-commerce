@@ -33,10 +33,10 @@ export const CartProvider = ({ children }) => {
         const existingProduct = updatedCart.find(item => item.id === product.id);
         if (existingProduct) {
             existingProduct.quantity += 1;
-            toast.success("Cart Updated!");
+            // toast.success("Cart Updated!");
         } else {
             updatedCart.push({ ...product, quantity: 1 });
-            toast.success("Product added to cart!");
+            // toast.success("Product added to cart!");
         }
 
         setCart(updatedCart);

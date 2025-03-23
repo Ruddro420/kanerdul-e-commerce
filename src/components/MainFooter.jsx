@@ -40,7 +40,7 @@ const MainFooter = () => {
           <div class="col-span-2 md:col-span-4 xl:pr-8">
             <img class="w-auto h-12" src="/gadgetextreme logo.png" alt="" />
 
-            <p class="text-base leading-relaxed text-gray-300 mt-7">
+            <p class="text-base leading-relaxed text-gray-200 mt-7">
               Discover the latest tech at Gadgetex – your one-stop shop for
               innovative gadgets and accessories. Shop smart, stay ahead.
             </p>
@@ -69,49 +69,53 @@ const MainFooter = () => {
           </div>
 
           <div class="lg:col-span-2">
-            <p class="text-base font-semibold text-gray-100">Categories</p>
+            <p class="text-md font-semibold text-gray-100">Categories</p>
 
             <ul class="mt-6 space-y-2">
-              {data[0]?.map((item) => {
-                return (
-                  <li>
-                    <Link
-                      className="flex text-sm text-gray-200 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"
-                      key={item.id}
-                      style={{ textTransform: "capitalize" }}
-                      to={`/category/${item.name}`}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                );
-              })}
+              {data[0]?.slice(0, 5).map((item) => (
+                <li key={item.id}>
+                  <Link
+                    className="flex text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                    style={{ textTransform: "capitalize" }}
+                    to={`/category/${item.name}`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div class="lg:col-span-2">
-            <p class="text-base font-semibold text-gray-100">Contact</p>
+            <p class="text-md font-semibold text-gray-100">Contact</p>
 
             <ul class="mt-6 space-y-2">
               <li>
                 <a
                   href="tel:+8801624010673"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm text-gray-200 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"><FaPhoneAlt /> +880 1624010673
+                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                >
+                  <FaPhoneAlt /> +880 1624010673
                 </a>
               </li>
               <li>
                 <a
                   href="https://www.facebook.com/profile.php?id=100087762086932"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm text-gray-200 transition-all duration-200 hover:text-orange-600 focus:text-orange-600"><FaFacebookF /> Facebook
+                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                >
+                  <FaFacebookF className="text-blue-600" size={15} /> Facebook
                 </a>
               </li>
               <li>
                 <a
                   href="https://wa.me/+8801624010673"
                   target="_blank"
-                  class="flex items-center gap-2  text-sm text-gray-200 transition-all duration-200 hover:text-orange-600 focus:text-orange-600">                  <IoLogoWhatsapp />
+                  class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
+                >
+                  {" "}
+                  <IoLogoWhatsapp className="text-green-600" size={15} />
                   WhatsApp{" "}
                 </a>
               </li>
@@ -142,7 +146,7 @@ const MainFooter = () => {
 
         <div class="sm:flex sm:items-center justify-center">
           <p class="text-sm text-gray-300">
-            © Copyright 2021, All Rights Reserved by Gadgete X
+            © Copyright 2021, All Rights Reserved by Gadgetextreme
           </p>
         </div>
       </div>
