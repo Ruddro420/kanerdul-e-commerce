@@ -28,14 +28,14 @@ export const CartProvider = ({ children }) => {
     };
 
     // add to cart
-    const addToCart = (product) => {
+    const addToCart = (product, selectedColor) => {
         let updatedCart = [...cart];
         const existingProduct = updatedCart.find(item => item.id === product.id);
         if (existingProduct) {
             existingProduct.quantity += 1;
             // toast.success("Cart Updated!");
         } else {
-            updatedCart.push({ ...product, quantity: 1 });
+            updatedCart.push({ ...product, quantity: 1, selectedColor });
             // toast.success("Product added to cart!");
         }
 
@@ -44,7 +44,7 @@ export const CartProvider = ({ children }) => {
     };
 
     // add Order
-    const orderNow = (product) => {
+    const orderNow = (product,selectedColor) => {
         let updatedCart = [...cart];
         const existingProduct = updatedCart.find(item => item.id === product.id);
         if (existingProduct) {
@@ -52,7 +52,7 @@ export const CartProvider = ({ children }) => {
             toast.success("Cart Updated!");
             navigate('/checkout')
         } else {
-            updatedCart.push({ ...product, quantity: 1 });
+            updatedCart.push({ ...product, quantity: 1, selectedColor });
             toast.success("Product added to cart!");
             navigate('/checkout')
         }

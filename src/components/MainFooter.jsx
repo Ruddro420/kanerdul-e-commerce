@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import bkash from "/bkash.svg";
@@ -150,7 +151,7 @@ const MainFooter = () => {
           </p>
         </div>
       </div>
-      <div className="fixed bottom-0 right-0 mr-6 mb-10 z-50">
+      <div className="fixed bottom-4 right-4 z-50">
         <Link to={"https://wa.me/+8801624010673"} target="_blank">
           {" "}
           <img src={whatsapp} className="w-18" alt="" />

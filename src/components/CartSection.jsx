@@ -1,31 +1,17 @@
-import React, { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-import { Link } from "react-router-dom";
-import Alert from "../components/Alert";
-import { FaPlus } from "react-icons/fa";
-
-const Cart = () => {
-  const {
-    cart,
-    totalPrice,
-    increaseQuantity,
-    decreaseQuantity,
-    removeFromCart,
-  } = useContext(CartContext);
-  const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
-  console.log(cart);
-  return (
-    <section className="bg-white py-8 antialiased md:py-16 lg:px-10">
-      {cart.length === 0 ? (
-        <Alert />
-      ) : (
-        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
-            Shopping Cart
-          </h2>
-          <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-            <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-              <div className="space-y-6">
+import React, { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import { Link } from 'react-router-dom';
+const CartSection = () => {
+      const {
+        cart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeFromCart,
+      } = useContext(CartContext);
+      const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
+    return (
+        <div>
+            <div className="space-y-6">
                 {cart.map((item) => (
                   <div
                     key={item.id}
@@ -45,6 +31,7 @@ const Cart = () => {
                           className={` w-8 h-8 border border-gray-200 rounded hover:shadow-sm cursor-pointer`}
                           style={{ backgroundColor: item.selectedColor }}
                         ></div>
+                        
                         <div className="flex items-center">
                           <button
                             onClick={() => decreaseQuantity(item.id)}
@@ -88,13 +75,15 @@ const Cart = () => {
                           </p>
                         </div>
                       </div>
+
+
                       <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                        <a
-                          href="#"
+                        <Link
+                        to={`/single/${item.id}`}
                           className="text-base font-medium text-gray-900 hover:underline"
                         >
                           {item.product_name}
-                        </a>{" "}
+                        </Link>{" "}
                         <br />
                         <button
                           onClick={() => removeFromCart(item.id)}
@@ -125,45 +114,8 @@ const Cart = () => {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-              <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
-                <p className="text-xl font-semibold text-gray-900">
-                  Order summary
-                </p>
-                <div className="space-y-4">
-                  <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
-                    <dt className="text-base font-bold text-gray-900">Total</dt>
-                    <dd className="text-base font-bold text-gray-900">
-                      ৳ {totalPrice.toFixed(2)}
-                    </dd>
-                  </dl>
-                </div>
-                <Link
-                  to="/checkout"
-                  className="flex w-full items-center justify-center rounded-lg bg-[#2A59FF] px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                >
-                  Proceed to Checkout
-                </Link>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-sm font-normal text-gray-500">
-                    {" "}
-                    or{" "}
-                  </span>
-                  <Link
-                    to="/"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-blue-700 underline hover:no-underline"
-                  >
-                    Continue Shopping
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      )}
-    </section>
-  );
+    );
 };
 
-export default Cart;
+export default CartSection;
