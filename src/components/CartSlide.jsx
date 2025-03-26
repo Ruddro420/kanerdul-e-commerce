@@ -177,14 +177,14 @@ const CartSlide = ({setIsCartOpen, isCartOpen}) => {
             <div className="flex flex-col gap-2">
               <Link
                 to="/cart"
-                className="block w-full text-center bg-[#193CB8] text-white py-2 rounded-md hover:bg-blue-700 transition"
+                className="bg-[#F9DADF] text-[#DF4A5D] py-2 px-4 rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer text-center"
                 onClick={() => setIsCartOpen(false)}
               >
                 View Cart
               </Link>
               <Link
                 to="/checkout"
-                className="block w-full text-center bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition"
+                className="bg-[#DF4A5D] text-[#F9DADF] py-2 px-4 rounded-md hover:bg-[#F9DADF] hover:text-[#DF4A5D] transition duration-300 cursor-pointer text-center"
                 onClick={() => setIsCartOpen(false)}
               >
                 Checkout

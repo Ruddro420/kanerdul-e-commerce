@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -7,23 +8,16 @@ import ProductSection from "../components/ProductSection";
 const SubCategory = () => {
   const { category, subCategory } = useParams();
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const { addToCart } = useContext(CartContext);
-
   const loadData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/products/category/${category}`);
-      const result = await response.json();
-      setData(result[0]); // Access the array of products from the "0" property
-      
-      // Filter products by sub-category
-      const filtered = result[0].filter(product => 
-        product.select_sub_category.toLowerCase() === subCategory.toLowerCase()
+      const response = await fetch(
+        `${BASE_URL}/products/subByCategory/${subCategory}/${category}`
       );
-      setFilteredData(filtered);
+      const result = await response.json();
+      setData(result);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -33,15 +27,17 @@ const SubCategory = () => {
 
   useEffect(() => {
     loadData();
-  }, [category, subCategory]);
+  }, [subCategory, category]);
 
   return (
     <div>
       <div className="text-center p-10 bg-green-700">
-        <h1 className="font-bold text-4xl mb-4 text-white">{subCategory.toUpperCase()}</h1>
+        <h1 className="font-bold text-4xl mb-4 text-white">
+          {subCategory.toUpperCase()}
+        </h1>
       </div>
       <div className="mt-16 lg:px-8">
-        <ProductSection loading={loading} data={filteredData} />
+        <ProductSection loading={loading} data={data[0]} />
       </div>
     </div>
   );

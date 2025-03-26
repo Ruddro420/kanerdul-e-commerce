@@ -25,9 +25,9 @@ const ProductsByClass = () => {
   }, []);
 
   // Filter products by class
-  const popularProducts = data.filter(product => product.product_class === "Popular Products");
-  const newArrivalProducts = data.filter(product => product.product_class === "New Arrival");
-  const trandingProducts = data.filter(product => product.product_class === "Tranding Product");
+  const popularProducts = data.filter(product => product.type === "Popular Products");
+  const newArrivalProducts = data.filter(product => product.type === "New Arrival");
+  const trandingProducts = data.filter(product => product.type === "Tranding Product");
 
   return (
     <div style={{ marginTop: "50px" }}>

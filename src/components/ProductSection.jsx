@@ -88,7 +88,7 @@ const ProductSection = ({ loading, data, className }) => {
 
 
   // Enhanced cart handlers with color validation
-  const handleAddToCart = (item) => {
+/*   const handleAddToCart = (item) => {
     const colors = processProductColors(item);
     if (colors.length > 0 && !selectedColors[item.id]) {
       alert("Please select a color first");
@@ -101,9 +101,9 @@ const ProductSection = ({ loading, data, className }) => {
       quantity: quantities[item.id] || 1
     });
     setIsCartOpen(!isCartOpen);
-  };
+  }; */
 
-  const handleOrderNow = (item) => {
+/*   const handleOrderNow = (item) => {
     const colors = processProductColors(item);
     if (colors.length > 0 && !selectedColors[item.id]) {
       alert("Please select a color first");
@@ -114,7 +114,7 @@ const ProductSection = ({ loading, data, className }) => {
       selectedColor: selectedColors[item.id] || null,
       quantity: quantities[item.id] || 1
     });
-  };
+  }; */
   console.log(selectedColors);
 
   return (
@@ -187,23 +187,23 @@ const ProductSection = ({ loading, data, className }) => {
                       <div className="flex flex-col gap-2">
                         <Link
                           to="/cart"
-                          className="bg-blue-100 text-center text-blue-800 py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
+                          className="bg-[#F9DADF] text-[#DF4A5D] py-2 px-4 rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer text-center"
                         >
                           কার্ট দেখুন
                         </Link>
                       </div>
                     ) : (
                       <button
-                        onClick={() => handleAddToCart(item)}
-                        className="bg-blue-100 text-blue-800 py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer"
+                        onClick={() => {addToCart(item, selectedColors[item.id]); setIsCartOpen(!isCartOpen)}}
+                        className="bg-[#F9DADF] text-[#DF4A5D] py-2 px-4 rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer text-center"
                       >
                         কার্টে রাখুন
                       </button>
                     )}
 
                     <button
-                      onClick={() => handleOrderNow(item)}
-                      className="bg-[#00A651] text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 cursor-pointer"
+                      onClick={() => orderNow(item, selectedColors[item.id])}
+                      className="bg-[#DF4A5D] text-[#F9DADF] py-2 px-4 rounded-md hover:bg-[#F9DADF] hover:text-[#DF4A5D] transition duration-300 cursor-pointer"
                     >
                       অর্ডার করুন
                     </button>

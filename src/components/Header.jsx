@@ -114,8 +114,9 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 </Link>
 
                 {categories.map((category) => {
-                  const hasSubCategories = Array.isArray(subCategories[category.name]) && 
-                                          subCategories[category.name].length > 0;
+                  const hasSubCategories =
+                    Array.isArray(subCategories[category.name]) &&
+                    subCategories[category.name].length > 0;
                   const isHovered = hoveredCategory === category.name;
 
                   return (
@@ -130,7 +131,8 @@ const Header = ({ menuopen, setMenuOpen }) => {
                         className="text-base font-medium text-black flex items-center capitalize"
                       >
                         {category.name}
-                        {(subCategories[category.name] === null || hasSubCategories) && (
+                        {(subCategories[category.name] === null ||
+                          hasSubCategories) && (
                           <svg
                             className="w-4 h-4 ml-1"
                             fill="none"
@@ -175,7 +177,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
               {/* Mobile Logo */}
               <div className="flex lg:hidden">
-                <h1 className="text-black text-lg font-bold">Gadgetextreme</h1>
+                <h1 className="text-gray-800 text-xl font-bold ml-2 font-tektur uppercase">Gadgetextreme</h1>
               </div>
 
               {/* Mobile Cart Button */}
@@ -249,7 +251,10 @@ const Header = ({ menuopen, setMenuOpen }) => {
                   </Link>
                 )}
 
-                <Link to="/cart" className="bg-gray-100 flex justify-center items-center mt-[-12px]">
+                <Link
+                  to="/cart"
+                  className="bg-gray-100 flex justify-center items-center mt-[-12px]"
+                >
                   <div className="relative">
                     <div className="t-0 absolute left-3">
                       <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
@@ -279,9 +284,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
         {/* Mobile Menu */}
         <nav
-          className={`py-4 bg-white lg:hidden ${
-            menuopen ? "block" : "hidden"
-          }`}
+          className={`py-4 bg-white lg:hidden ${menuopen ? "block" : "hidden"}`}
         >
           <div className="px-4 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
@@ -321,22 +324,29 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 </Link>
 
                 {categories.map((category) => {
-                  const hasSubCategories = Array.isArray(subCategories[category.name]) && 
-                                        subCategories[category.name].length > 0;
-                  const isExpanded = subCategories[category.name] !== null && 
-                                  subCategories[category.name] !== undefined;
+                  const hasSubCategories =
+                    Array.isArray(subCategories[category.name]) &&
+                    subCategories[category.name].length > 0;
+                  const isExpanded =
+                    subCategories[category.name] !== null &&
+                    subCategories[category.name] !== undefined;
 
                   return (
                     <div key={category.id}>
                       <Link
                         to={`/category/${category.name}`}
                         className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600 flex items-center justify-between capitalize"
-                        onClick={(e) => handleMobileCategoryClick(e, category.name)}
+                        onClick={(e) =>
+                          handleMobileCategoryClick(e, category.name)
+                        }
                       >
                         {category.name}
-                        {(subCategories[category.name] === null || hasSubCategories) && (
+                        {(subCategories[category.name] === null ||
+                          hasSubCategories) && (
                           <svg
-                            className={`w-4 h-4 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
+                            className={`w-4 h-4 transition-transform ${
+                              isExpanded ? "transform rotate-180" : ""
+                            }`}
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"

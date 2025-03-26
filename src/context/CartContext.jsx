@@ -36,6 +36,7 @@ export const CartProvider = ({ children }) => {
             // toast.success("Cart Updated!");
         } else {
             updatedCart.push({ ...product, quantity: 1, selectedColor });
+            
             // toast.success("Product added to cart!");
         }
 

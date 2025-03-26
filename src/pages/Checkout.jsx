@@ -65,7 +65,7 @@ const Checkout = () => {
       return;
     }
 
-    if (!getUser) {
+/*     if (!getUser) {
       const confirmCheckout = window.confirm(
         "\nDo you want to order without an account?\n"
       );
@@ -73,7 +73,7 @@ const Checkout = () => {
       if (!confirmCheckout) {
         return;
       }
-    }
+    } */
 
     const order = {
       user_id: getUser ? getUser.uid : null,

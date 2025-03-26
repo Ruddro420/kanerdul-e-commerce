@@ -15,7 +15,7 @@ const Single = () => {
   const [relatedLoading, setRelatedLoading] = useState(true);
   const [selectedImg, setSelectedImg] = useState("");
   const { cart, addToCart, orderNow } = useContext(CartContext);
-  const isInCart = cart.some(item => item.id === data?.id);
+  const isInCart = cart.some((item) => item.id === data?.id);
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
 
@@ -97,24 +97,6 @@ const Single = () => {
     loadData();
   }, [id]);
 
-  /* Cart handlers with color validation */
-  const handleAddToCart = () => {
-    if (colors.length > 0 && !selectedColor) {
-      alert("Please select a color first");
-      return;
-    }
-    addToCart({ ...data, selectedColor });
-    setIsCartOpen(!isCartOpen);
-  };
-
-  const handleOrderNow = () => {
-    if (colors.length > 0 && !selectedColor) {
-      alert("Please select a color first");
-      return;
-    }
-    orderNow({ ...data, selectedColor });
-  };
-
   return (
     <>
       {loading ? (
@@ -167,8 +149,8 @@ const Single = () => {
                   <div className="flex mb-4">
                     <div className="mr-4">
                       <span className="font-bold text-gray-700">Price: </span>
-                      <span className="text-gray-600">
-                        $ {data.selling_price}
+                      <span className="text-gray-600 text-xl font-semibold">
+                        ৳ {data.selling_price}
                       </span>
                     </div>
                     <div>
@@ -209,33 +191,36 @@ const Single = () => {
                       </div>
                       {selectedColor && (
                         <p className="text-sm text-gray-600 mt-1">
-                          Selected: {colors.find(c => c.code === selectedColor)?.name}
+                          Selected:{" "}
+                          {colors.find((c) => c.code === selectedColor)?.name}
                         </p>
                       )}
                     </div>
                   )}
-                  <div className="flex -mx-2 mb-4 pt-8">
-                    <div className="w-1/2 px-2">
-                    {isInCart ? (
-                        <Link
-                          to="/cart"
-                          className="w-full bg-blue-600 text-white py-2 px-4 font-bold hover:bg-blue-700 cursor-pointer transition-colors block text-center"
-                        >
-                          কার্ট দেখুন
-                        </Link>
+                  <div className="flex justify-items-stretch gap-4 lg:-mx-2 mb-4 pt-8">
+                    <div className="w-full">
+                      {isInCart ? (
+                        <button className="bg-[#F9DADF] text-[#DF4A5D] h-full rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer w-full">
+                          <Link to="/cart" className="py-2 h-full px-4 w-full">
+                            কার্ট দেখুন
+                          </Link>
+                        </button>
                       ) : (
                         <button
-                          onClick={handleAddToCart}
-                          className="w-full bg-gray-900 text-white py-2 px-4 font-bold hover:bg-gray-800 cursor-pointer transition-colors"
+                          onClick={() => {
+                            addToCart({ ...data, selectedColor });
+                            setIsCartOpen(!isCartOpen);
+                          }}
+                          className="bg-[#F9DADF] text-[#DF4A5D] py-2 px-4 rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer w-full"
                         >
                           কার্টে রাখুন
                         </button>
                       )}
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div className="w-full">
                       <button
-                        onClick={handleOrderNow}
-                        className="w-full bg-gray-200 text-gray-800 py-2 px-4 font-bold hover:bg-gray-300 cursor-pointer transition-colors"
+                        onClick={() => orderNow({ ...data, selectedColor })}
+                        className="bg-[#DF4A5D] text-[#F9DADF] py-2 px-4 rounded-md hover:bg-[#F9DADF] hover:text-[#DF4A5D] transition duration-300 cursor-pointer w-full"
                       >
                         অর্ডার করুন
                       </button>
@@ -243,10 +228,11 @@ const Single = () => {
                   </div>
                   <div className="w-full flex gap-2 my-4">
                     <button
-                      onClick={handleOrderNow}
+                      onClick={() => orderNow({ ...data, selectedColor })}
                       className="w-full bg-[#F69603] text-black py-2 px-4 font-bold hover:bg-[#f6a503] cursor-pointer flex gap-2 justify-center items-center transition-colors"
                     >
-                      <FaCartShopping size={25} /> ক্যাশ অন ডেলিভারিতে অর্ডার করুণ
+                      <FaCartShopping size={25} /> ক্যাশ অন ডেলিভারিতে অর্ডার
+                      করুণ
                     </button>
                   </div>
                   <div className="w-full flex gap-2">

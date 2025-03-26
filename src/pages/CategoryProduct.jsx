@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -34,7 +35,7 @@ const CategoryProduct = () => {
         <h1 class="font-bold text-4xl mb-4 text-white">{id.toUpperCase()}</h1>
       </div>
       <div className="mt-16 lg:px-8">
-      <ProductSection loading={loading} data={data[0]}/>
+        <ProductSection loading={loading} data={data[0]} />
       </div>
     </div>
   );
