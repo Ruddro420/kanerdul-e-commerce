@@ -7,6 +7,7 @@ import Loader from "./Loader";
 const Header = ({ menuopen, setMenuOpen }) => {
   const { cart, user } = useContext(CartContext);
   const [categories, setCategories] = useState([]);
+  const [localOrderData, setLocalOrderData] = useState([]);
   const [subCategories, setSubCategories] = useState({});
   const [loading, setLoading] = useState(true);
   const [hoveredCategory, setHoveredCategory] = useState(null);
@@ -55,6 +56,8 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
   useEffect(() => {
     loadCategories();
+    const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
+    setLocalOrderData(guestOrders);
   }, []);
 
   const handleCategoryHover = (categoryName) => {
@@ -94,15 +97,23 @@ const Header = ({ menuopen, setMenuOpen }) => {
             <nav className="relative flex items-center justify-between h-16 lg:h-20">
               <div className="">
                 <div className="flex-shrink-0">
-                  <Link to="/" title="" className="flex">
+                  <Link to="/" title="" className="flex items-center gap-2">
                     <img
                       className="w-auto h-8 lg:h-10"
                       src="/gadgetextreme logo.png"
                       alt=""
                     />
+                    <div className="flex ">
+                      <h1 className="text-gray-800 lg:text-2xl text-lg font-bold font-tektur uppercase">
+                        Gadgetextreme
+                      </h1>
+                    </div>
                   </Link>
                 </div>
+                {/* Mobile Logo */}
+
               </div>
+
 
               {/* Desktop Navigation */}
               <div className="hidden lg:flex lg:items-center lg:space-x-7">
@@ -112,6 +123,8 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 >
                   Home
                 </Link>
+
+
 
                 {categories.map((category) => {
                   const hasSubCategories =
@@ -133,21 +146,21 @@ const Header = ({ menuopen, setMenuOpen }) => {
                         {category.name}
                         {(subCategories[category.name] === null ||
                           hasSubCategories) && (
-                          <svg
-                            className="w-4 h-4 ml-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        )}
+                            <svg
+                              className="w-4 h-4 ml-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          )}
                       </Link>
 
                       {isHovered && hasSubCategories && (
@@ -175,10 +188,6 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 </Link>
               </div>
 
-              {/* Mobile Logo */}
-              <div className="flex lg:hidden">
-                <h1 className="text-gray-800 text-xl font-bold ml-2 font-tektur uppercase">Gadgetextreme</h1>
-              </div>
 
               {/* Mobile Cart Button */}
               <Link
@@ -243,12 +252,22 @@ const Header = ({ menuopen, setMenuOpen }) => {
                     </Link>
                   </div>
                 ) : (
-                  <Link
-                    to="/login"
-                    className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
-                  >
-                    Sign in
-                  </Link>
+                  <>
+                    {localOrderData && (
+                      <Link
+                        to="/orders"
+                        className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                      >
+                        See Orders
+                      </Link>
+                    )}
+                    <Link
+                      to="/login"
+                      className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                    >
+                      Sign in
+                    </Link>
+                  </>
                 )}
 
                 <Link
@@ -343,23 +362,22 @@ const Header = ({ menuopen, setMenuOpen }) => {
                         {category.name}
                         {(subCategories[category.name] === null ||
                           hasSubCategories) && (
-                          <svg
-                            className={`w-4 h-4 transition-transform ${
-                              isExpanded ? "transform rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        )}
+                            <svg
+                              className={`w-4 h-4 transition-transform ${isExpanded ? "transform rotate-180" : ""
+                                }`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          )}
                       </Link>
 
                       {isExpanded && hasSubCategories && (
@@ -400,6 +418,14 @@ const Header = ({ menuopen, setMenuOpen }) => {
                   </Link>
                 ) : (
                   <>
+                    {localOrderData && (
+                      <Link
+                        to="/orders"
+                        className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                      >
+                        See Orders
+                      </Link>
+                    )}
                     <Link
                       to="/register"
                       className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"

@@ -55,17 +55,20 @@ const Account = () => {
   useEffect(() => {
     if (getUser?.uid) {
       loadData();
+    } else {
+      const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
+      setOrderData(guestOrders);
     }
   }, [getUser, BASE_URL]);
 
   /* format date */
   const formatDate = (isoDate) => {
     return new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     }).format(new Date(isoDate));
-};
+  };
 
   console.log(orderData);
 
@@ -74,160 +77,120 @@ const Account = () => {
       <section className="bg-white py-8 antialiased md:py-8">
         <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
           <h2 className="mb-4 text-xl font-semibold text-gray-900  sm:text-2xl md:mb-6">
-            User Dashboard
+          {getUser? " User Dashboard":"Orders History"} 
           </h2>
-          <div className="py-4 md:py-8">
-            <div className="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
-              <div className="space-y-4">
-                <div className="flex space-x-4">
-                  <img
-                    className="h-16 w-16 rounded-lg"
-                    src="/profile.png"
-                    alt="Helene avatar"
-                  />
-                  <div>
-                    <h2 className="flex items-start text-xl font-bold leading-none text-gray-900  sm:text-2xl pt-5 flex-col">
-                      User Id:  <span className="text-sm"> {getUser?.uid}</span>
-                    </h2>
-                  </div>
-                </div>
-                <dl className="">
-                  <dt className="font-semibold text-gray-900 ">Email Address</dt>
-                  <dd className="text-gray-500 ">{getUser?.email}</dd>
-                </dl>
-               {/*  <dl>
-                  <dt className="font-semibold text-gray-900 ">Home Address</dt>
-                  <dd className="flex items-center gap-1 text-gray-500 ">
-                    <svg
-                      className="hidden h-5 w-5 shrink-0 text-gray-400  lg:inline"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
-                      />
-                    </svg>
-                    {orderData?.address}
-                  </dd>
-                </dl> */}
-              </div>
-             {/*  <div className="space-y-4">
-                <dl>
-                  <dt className="font-semibold text-gray-900 ">Phone Number</dt>
-                  <dd className="text-gray-500 ">
-                  </dd>
-                </dl>
-
-                <dl>
-                  <dt className="font-semibold text-gray-900 ">My Companies</dt>
-                  <dd className="text-gray-500 ">
-                    FLOWBITE LLC, Fiscal code: 18673557
-                  </dd>
-                </dl>
-                <dl>
-                  <dt className="mb-1 font-semibold text-gray-900 ">
-                    Payment Methods
-                  </dt>
-                  <dd className="flex items-center space-x-4 text-gray-500 ">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 ">
-                      <img
-                        className="h-4 w-auto "
-                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg"
-                        alt=""
-                      />
-                      <img
-                        className="hidden h-4 w-auto "
-                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa-dark.svg"
-                        alt=""
-                      />
-                    </div>
+          {getUser ? (
+            <div className="py-4 md:py-8">
+              <div className="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
+                <div className="space-y-4">
+                  <div className="flex space-x-4">
+                    <img
+                      className="h-16 w-16 rounded-lg"
+                      src="/profile.png"
+                      alt="Helene avatar"
+                    />
                     <div>
-                      <div className="text-sm">
-                        <p className="mb-0.5 font-medium text-gray-900 ">
-                          {order.paymentMethod}
-                        </p>
-                        <p className="font-normal text-gray-500 ">
-                          {order.orderDate}{" "}
-                        </p>
-                      </div>
+                      <h2 className="flex items-start text-xl font-bold leading-none text-gray-900  sm:text-2xl pt-5 flex-col">
+                        User Id:{" "}
+                        <span className="text-sm"> {getUser?.uid} </span>
+                      </h2>
                     </div>
-                  </dd>
-                </dl>
-              </div> */}
-            </div>
-            <button
-              onClick={logout}
-              type="button"
-              data-modal-target="accountInformationModal2"
-              data-modal-toggle="accountInformationModal2"
-              className="bg-[red] inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300  sm:w-auto cursor-pointer"
-            >
-              <svg
-                className="-ms-0.5 me-1.5 h-4 w-4"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
+                  </div>
+                  <dl className="">
+                    <dt className="font-semibold text-gray-900 ">
+                      Email Address
+                    </dt>
+                    <dd className="text-gray-500 ">{getUser?.email}</dd>
+                  </dl>
+                </div>
+              </div>
+              <button
+                onClick={logout}
+                type="button"
+                data-modal-target="accountInformationModal2"
+                data-modal-toggle="accountInformationModal2"
+                className="bg-[red] inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300  sm:w-auto cursor-pointer"
               >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                ></path>
-              </svg>
-              Logout
-            </button>
-          </div>
+                <svg
+                  className="-ms-0.5 me-1.5 h-4 w-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                  ></path>
+                </svg>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <></>
+          )}
 
           <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ">
             <h3 className="mb-4 text-xl font-semibold text-gray-900 ">
               {orderData?.length === 0 ? "No orders yet" : " Latest orders"}
             </h3>
-            {orderData.map((order, i) => (
+            {orderData?.map((order, i) => (
               <div
                 key={i}
                 className="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 "
               >
+                {getUser ? (
+                  <dl className="w-1/2 sm:w-48">
+                    <dt className="text-base font-medium text-gray-500 ">
+                      Order ID:
+                    </dt>
+                    <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
+                      <a href="#" className="hover:underline">
+                        #{order.order_id}
+                      </a>
+                    </dd>
+                  </dl>
+                ):
+                
                 <dl className="w-1/2 sm:w-48">
-                  <dt className="text-base font-medium text-gray-500 ">
-                    Order ID:
-                  </dt>
-                  <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
-                    <a href="#" className="hover:underline">
-                      #{order.order_id}
-                    </a>
-                  </dd>
-                </dl>
+                    <dt className="text-base font-medium text-gray-500 ">
+                      Order ID:
+                    </dt>
+                    <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
+                      <a href="#" className="hover:underline">
+                        #{order.client_order_id}
+                      </a>
+                    </dd>
+                  </dl>
+                }
 
                 <dl className="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
-                  <dt className="text-base font-medium text-gray-500 ">Date:</dt>
+                  <dt className="text-base font-medium text-gray-500 ">
+                    Date:
+                  </dt>
                   <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
-                    {formatDate(order.created_at)}
+                    {order?.created_at ? formatDate(order?.created_at) : ""}
                   </dd>
                 </dl>
-
 
                 <dl className="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
-                  <dt className="text-base font-medium text-gray-500 ">Price: </dt>
+                  <dt className="text-base font-medium text-gray-500 ">
+                    Price:{" "}
+                  </dt>
                   <dd className="mt-1.5 text-base font-semibold text-gray-900 ">
-                  ৳ {order.total_price}
+                    ৳ {order.total_price}
                   </dd>
                 </dl>
 
-                <dl className="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
-                  <dt className="text-base font-medium text-gray-500 ">Status:</dt>
+                {getUser &&  <dl className="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
+                  <dt className="text-base font-medium text-gray-500 ">
+                    Status:
+                  </dt>
                   <dd className="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ">
                     <svg
                       className="me-1 h-3 w-3"
@@ -252,11 +215,13 @@ const Account = () => {
                       ? "Completed"
                       : "Cancelled"}
                   </dd>
-                </dl>
+                </dl>}
+
+               
 
                 <div className="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
                   <Link
-                  to={`/order-details/${order.order_id}`}
+                    to={`/order-details/${order.order_id}`}
                     type="button"
                     className="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 "
                   >

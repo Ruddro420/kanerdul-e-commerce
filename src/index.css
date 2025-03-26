@@ -9,10 +9,15 @@ body {
 
 
 .font-tektur {
-  font-family: "Tektur", sans-serif;
-  font-optical-sizing: auto;
+  transition-property: opacity, transform;
+  font-family: "gf_Tektur variant0", Tofu;
+  font-weight: 400;
   font-style: normal;
-
+  font-stretch: 100%;
+  font-optical-sizing: auto;
+  opacity: 1;
+  line-height: initial;
+  transition-duration: 350ms;
 }
 
 /* Fullscreen Loader */

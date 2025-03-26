@@ -9,7 +9,7 @@ const Checkout = () => {
   const { totalPrice, setCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    deliveryArea: "outside" // Default to outside Dhaka
+    deliveryArea: "outside", // Default to outside Dhaka
   });
   const [getUser, setGetUser] = useState("");
   const [orderData, setOrderData] = useState([]);
@@ -31,19 +31,47 @@ const Checkout = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     setGetUser(user?.user);
+    generateRandomText();
   }, []);
 
   const validateBangladeshiPhoneNumber = (phone) => {
     const regex = /^(?:\+8801|01)\d{9}$/;
     return regex.test(phone);
   };
+  /* guest use extra functions------------------- */
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+  const currentDate = formatDate(new Date());
+  
+/*  */
+const [randomId, setRandomId] = useState('');
+
+const generateRandomText = () => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  
+  for (let i = 0; i < 5; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  
+  setRandomId(result);
+}
+
+  /* --------------- */
 
   const checkOut = async (e) => {
     e.preventDefault();
-
+ 
     const productDetails = JSON.parse(localStorage.getItem("cart")) || [];
     const deliveryCharge = calculateDeliveryCharge(formData.deliveryArea);
-    const areaName = formData.deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে";
+    const areaName =
+      formData.deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে";
 
     const phone = getUser ? orderData?.phone || formData.phone : formData.phone;
 
@@ -57,7 +85,7 @@ const Checkout = () => {
     if (
       !getUser &&
       (!formData.name ||
-        !formData.email ||
+        // !formData.email ||
         !formData.address ||
         !formData.phone)
     ) {
@@ -65,7 +93,7 @@ const Checkout = () => {
       return;
     }
 
-/*     if (!getUser) {
+    /*     if (!getUser) {
       const confirmCheckout = window.confirm(
         "\nDo you want to order without an account?\n"
       );
@@ -79,8 +107,11 @@ const Checkout = () => {
       user_id: getUser ? getUser.uid : null,
       cart: productDetails,
       name: formData.name,
-      email: getUser ? getUser.email : formData.email,
-      address: `${getUser ? orderData?.address || formData.address : formData.address}, ${areaName}`,
+      client_order_id :randomId,
+      email: getUser ? getUser.email : formData?.email,
+      address: `${
+        getUser ? orderData?.address || formData.address : formData.address
+      }, ${areaName}`,
       phone: getUser ? orderData?.phone || formData.phone : formData.phone,
       total_price: totalPrice + deliveryCharge,
       p_method: "Cash On Delivery",
@@ -98,6 +129,20 @@ const Checkout = () => {
       if (response.ok) {
         localStorage.setItem("order", JSON.stringify(order));
         toast.success("Your Order is Placed Successfully");
+
+        // Save guest order (for non-logged-in users)
+        if (!getUser) {
+          const guestOrderWithDate = {
+            ...order,
+            created_at: currentDate,
+            order_id :randomId, // Add current date to the order
+          };
+
+          const guestOrders =
+            JSON.parse(localStorage.getItem("guestOrders")) || [];
+          guestOrders.push(guestOrderWithDate);
+          localStorage.setItem("guestOrders", JSON.stringify(guestOrders));
+        }
 
         setCart([]);
         localStorage.setItem("cart", JSON.stringify([]));
@@ -117,7 +162,10 @@ const Checkout = () => {
   return (
     <>
       <section className="bg-white py-8 antialiased">
-        <form onSubmit={checkOut} className="mx-auto max-w-screen px-4 2xl:px-0">
+        <form
+          onSubmit={checkOut}
+          className="mx-auto max-w-screen px-4 2xl:px-0"
+        >
           <div className="mt-6 sm:mt-8 lg:grid grid-cols-2 lg:w-[90%] mx-auto lg:items-start lg:gap-12 xl:gap-16">
             <div className="min-w-0 flex-1 space-y-8">
               <div className="space-y-4">
@@ -188,7 +236,7 @@ const Checkout = () => {
                       htmlFor="your_email"
                       className="mb-2 block text-sm font-medium text-gray-900"
                     >
-                      আপনার ইমেইল*
+                      আপনার ইমেইল
                     </label>
                     <input
                       name="email"
@@ -197,11 +245,10 @@ const Checkout = () => {
                       type="email"
                       className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                       placeholder="name@flowbite.com"
-                      required
                     />
                   </div>
                 </div>
-                
+
                 {/* Delivery Area Radio Buttons */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center ps-4 border border-gray-300 rounded-lg">
@@ -282,7 +329,11 @@ const Checkout = () => {
 
                   <dl className="flex items-center justify-between gap-4 py-3">
                     <dt className="text-base font-normal text-gray-500">
-                      ডেলিভারি চার্জ ({formData.deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"})
+                      ডেলিভারি চার্জ (
+                      {formData.deliveryArea === "inside"
+                        ? "ঢাকার ভিতরে"
+                        : "ঢাকার বাইরে"}
+                      )
                     </dt>
                     <dd className="text-base font-medium text-gray-900">
                       ৳ {calculateDeliveryCharge(formData.deliveryArea)}
@@ -292,7 +343,9 @@ const Checkout = () => {
                   <dl className="flex items-center justify-between gap-4 py-3">
                     <dt className="text-base font-bold text-gray-900">মোট</dt>
                     <dd className="text-base font-bold text-gray-900">
-                      ৳ {totalPrice + calculateDeliveryCharge(formData.deliveryArea)}
+                      ৳{" "}
+                      {totalPrice +
+                        calculateDeliveryCharge(formData.deliveryArea)}
                     </dd>
                   </dl>
                 </div>

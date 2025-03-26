@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import RelatedProduct from "../components/RelatedProduct";

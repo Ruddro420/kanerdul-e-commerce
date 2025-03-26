@@ -1,15 +1,39 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 const OrderSuccess = () => {
-  const { order } = useContext(CartContext);
+  const { order: contextOrder } = useContext(CartContext);
   const [getUser, setGetUser] = useState("");
+  const [order, setOrder] = useState(null);
+
   useEffect(() => {
+    // Get user data
     const user = JSON.parse(localStorage.getItem("user"));
     setGetUser(user?.user);
-  }, []);
-  // console.log(order);
+
+    // Get order data from localStorage first, fallback to context
+    const localStorageOrder = JSON.parse(localStorage.getItem("order"));
+    setOrder(localStorageOrder || contextOrder);
+  }, [contextOrder]);
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const currentDate = formatDate(new Date());
+  const orderDate = order?.orderDate
+    ? formatDate(new Date(order.orderDate))
+    : currentDate;
+
+  if (!order) {
+    return <div>Loading order details...</div>;
+  }
 
   return (
     <div>
@@ -30,7 +54,15 @@ const OrderSuccess = () => {
             <dl class="sm:flex items-center justify-between gap-4">
               <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">Date</dt>
               <dd class="font-medium text-gray-900  sm:text-end">
-                {order.orderDate}
+                {orderDate} {/* if no date it will show todays date */}
+              </dd>
+            </dl>
+            <dl class="sm:flex items-center justify-between gap-4">
+              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">
+                Order ID
+              </dt>
+              <dd class="font-medium text-gray-900 sm:text-end">
+                #{order?.client_order_id}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
@@ -38,7 +70,15 @@ const OrderSuccess = () => {
                 Payment Method
               </dt>
               <dd class="font-medium text-gray-900 sm:text-end">
-                {order.p_method}
+                {order?.p_method}
+              </dd>
+            </dl>
+            <dl class="sm:flex items-center justify-between gap-4">
+              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">
+                Total Price
+              </dt>
+              <dd class="font-medium text-gray-900 sm:text-end">
+                ৳ {order?.total_price}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
@@ -61,9 +101,16 @@ const OrderSuccess = () => {
             </dl>
           </div>
           <div class="flex items-center space-x-4">
-            {getUser && (
+            {getUser ? (
               <Link
                 to="/account"
+                class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none bg-[#2a59ff]"
+              >
+                Track your order
+              </Link>
+            ) : (
+              <Link
+                to="/orders"
                 class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none bg-[#2a59ff]"
               >
                 Track your order

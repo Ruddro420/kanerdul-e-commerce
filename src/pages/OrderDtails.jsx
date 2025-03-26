@@ -9,6 +9,7 @@ const OrderDtails = () => {
   const [getUser, setGetUser] = useState(null);
   const { id } = useParams(); // Get the order_id from URL params
   const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -41,6 +42,17 @@ const OrderDtails = () => {
   useEffect(() => {
     if (getUser?.uid) {
       loadData();
+    } else {
+      // For guest users, get the specific order from localStorage using the order ID
+      const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
+      const specificGuestOrder = guestOrders.find(order => order.order_id === id);
+      
+      if (specificGuestOrder) {
+        setOrderData(specificGuestOrder);
+      } else {
+        setOrderData(null); // No order found
+      }
+      setLoading(false);
     }
   }, [getUser, BASE_URL, id]);
 
@@ -130,7 +142,7 @@ const OrderDtails = () => {
                     <dt class="text-base font-medium text-gray-500 ">Price</dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                    ৳ {product.selling_price}
+                    ৳ {product?.selling_price}
                   </dd>
                 </dl>
 

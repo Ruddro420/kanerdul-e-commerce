@@ -18,6 +18,7 @@ import CategoryProduct from "./pages/CategoryProduct.jsx";
 import OrderDtails from "./pages/OrderDtails.jsx";
 import SubCategory from "./pages/SubCategory.jsx";
 import Shop from "./pages/Shop.jsx";
+import MyOrders from "./pages/MyOrders.jsx";
 
 // Create router configuration using createBrowserRouter
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
         element: <CategoryProduct />,
       },
       {
+        path: "/my-orders",
+        element: <MyOrders />,
+      },
+      {
         path: "/sub-category/:category/:subCategory",
         element: <SubCategory />,
       },
@@ -62,11 +67,19 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/orders",
+        element: (
+          // <PrivateRoute>
+            <Account />
+          // </PrivateRoute>
+        ),
+      },
+      {
         path: "/order-details/:id",
         element: (
-          <PrivateRoute>
+          // <PrivateRoute>
             <OrderDtails />
-          </PrivateRoute>
+          // </PrivateRoute>
         ),
       },
       {

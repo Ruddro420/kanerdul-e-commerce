@@ -1,26 +1,26 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules"; // Include Pagination module
+import { Autoplay, Navigation, Pagination } from "swiper/modules"; 
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination"; // Import Pagination styles
+import "swiper/css/pagination";
 
 const Slider = () => {
   const heroimg = ["/web image 1.webp", "/web image 2.webp"];
   return (
     <div>
       <Swiper
-        modules={[Navigation, Autoplay, Pagination]} // Add Pagination module
+        modules={[Navigation, Autoplay, Pagination]} 
         spaceBetween={50}
-        slidesPerView={1} // Default view
+        slidesPerView={1} 
         loop={true}
         autoplay={{ delay: 2500 }}
-        pagination={{ clickable: true }} // Enable Pagination
+        pagination={{ clickable: true }} 
         // navigation 
         breakpoints={{
-          320: { slidesPerView: 1 }, // Mobile (Small screens)
-          768: { slidesPerView: 1 }, // Tablets
-          1024: { slidesPerView: 1 }, // Desktops
+          320: { slidesPerView: 1 }, 
+          768: { slidesPerView: 1 }, 
+          1024: { slidesPerView: 1 },
         }}
       >
         {heroimg.map((img, index) => (
