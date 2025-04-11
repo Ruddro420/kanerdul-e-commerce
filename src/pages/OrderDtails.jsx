@@ -64,6 +64,15 @@ const OrderDtails = () => {
     return <div>Order not found</div>;
   }
 
+  const formatUrl = (str) => {
+    if (!str) return 'product'; // Fallback for null/undefined
+    return str
+      .toString() // Ensure it's a string
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/[^a-zA-Z0-9-]/g, '') // Remove special characters
+      .toLowerCase();
+  };
+
   return (
     <section class="bg-white py-8 antialiased md:py-8">
       <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
@@ -108,7 +117,7 @@ const OrderDtails = () => {
                 <dl class="w-1/2  lg:w-1/10">
                  
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                    <Link to={`/single/${product.id}`} class="hover:underline">
+                    <Link to={`/product/${product.id}/${formatUrl(product.product_name)}`} class="hover:underline">
                       <img
                         src={`${IMAGE_URL}/admin/product/${product.product_image}`}
                         className="w-8 h-8"
@@ -122,7 +131,7 @@ const OrderDtails = () => {
                     <dt class="text-base font-medium text-gray-500 ">Name</dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                    <Link to={`/single/${product.id}`} class="hover:underline">
+                    <Link to={`/product/${product.id}/${formatUrl(product.product_name)}`} class="hover:underline">
                       {product?.product_name}
                     </Link>
                   </dd>

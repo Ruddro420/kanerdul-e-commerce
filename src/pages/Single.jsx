@@ -42,9 +42,9 @@ const Single = () => {
   // Process colors from data
   const colors = data?.color
     ? data.color.split(",").map((color) => ({
-        name: color.trim(),
-        code: getColorCode(color.trim()),
-      }))
+      name: color.trim(),
+      code: getColorCode(color.trim()),
+    }))
     : [];
 
   // Initialize selectedColor state
@@ -111,15 +111,15 @@ const Single = () => {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row -mx-4 align-center">
                 <div className="md:flex-1 px-4">
-                  <div className="h-[460px] rounded-lg bg-gray-300 mb-4">
+                  <div className="lg:h-[460px] rounded-lg bg-white mb-4">
                     <img
-                      className="w-full h-full object-cover"
+                      className="w-full lg:h-full h-auto object-cover"
                       src={
                         selectedImg
                           ? `${IMAGE_URL}/admin/product/gallery/${selectedImg}`
                           : data.product_image
-                          ? `${IMAGE_URL}/admin/product/${data.product_image}`
-                          : "/Placeholder.svg"
+                            ? `${IMAGE_URL}/admin/product/${data.product_image}`
+                            : "/Placeholder.svg"
                       }
                       alt={data.product_name}
                     />
@@ -162,12 +162,14 @@ const Single = () => {
                     </div>
                   </div>
                   <div>
-                    <span className="font-bold text-gray-700">
-                      Product Description:
-                    </span>
-                    <p className="text-gray-600 text-sm mt-2">
-                      {data.p_short_des}
-                    </p>
+                    <span className="font-bold text-gray-700">Product Description:</span>
+                    <div className="text-gray-600 text-sm mt-2">
+                      {data.p_short_des.split(',').map((line, index) => (
+                        <p key={index} className="mb-1">
+                          {line.trim()}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                   {colors.length > 0 && (
                     <div>
@@ -179,11 +181,10 @@ const Single = () => {
                           <button
                             key={index}
                             onClick={() => setSelectedColor(color.code)}
-                            className={`w-8 h-8 rounded border-2 transition-all ${
-                              selectedColor === color.code
+                            className={`w-8 h-8 rounded border-2 transition-all ${selectedColor === color.code
                                 ? "border-black shadow-md"
                                 : "border-gray-300"
-                            } hover:shadow-sm`}
+                              } hover:shadow-sm`}
                             style={{ backgroundColor: color.code }}
                             title={color.name}
                             aria-label={`Select color ${color.name}`}
