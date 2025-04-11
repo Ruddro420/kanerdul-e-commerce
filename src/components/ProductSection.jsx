@@ -163,7 +163,7 @@ const ProductSection = ({ loading, data, className }) => {
                   {hasColors && (
                     <div className="mt-2">
                       <div className="flex gap-1 flex-wrap">
-                        {colors.map((color, index) => (
+                        {colors?.map((color, index) => (
                           <button
                             key={index}
                             onClick={() => handleColorSelect(item.id, color.code)}
@@ -187,7 +187,7 @@ const ProductSection = ({ loading, data, className }) => {
                       <div className="flex flex-col gap-2">
                         <Link
                           to="/cart"
-                          className="bg-[#F9DADF] text-[#DF4A5D] py-2 px-4 rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer text-center"
+                          className="bg-[blue] text-white font-bold py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer text-center"
                         >
                           কার্ট দেখুন
                         </Link>
@@ -195,7 +195,7 @@ const ProductSection = ({ loading, data, className }) => {
                     ) : (
                       <button
                         onClick={() => {addToCart(item, selectedColors[item.id]); setIsCartOpen(!isCartOpen)}}
-                        className="bg-[#F9DADF] text-[#DF4A5D] py-2 px-4 rounded-md hover:bg-[#DF4A5D] hover:text-[#F9DADF] transition duration-300 cursor-pointer text-center"
+                        className="bg-[blue] text-white font-bold py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer text-center"
                       >
                         কার্টে রাখুন
                       </button>
@@ -203,7 +203,7 @@ const ProductSection = ({ loading, data, className }) => {
 
                     <button
                       onClick={() => orderNow(item, selectedColors[item.id])}
-                      className="bg-[#DF4A5D] text-[#F9DADF] py-2 px-4 rounded-md hover:bg-[#F9DADF] hover:text-[#DF4A5D] transition duration-300 cursor-pointer"
+                      className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-yellow-400 hover:text-black transition duration-300 cursor-pointer"
                     >
                       অর্ডার করুন
                     </button>

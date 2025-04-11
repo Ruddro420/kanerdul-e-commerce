@@ -92,7 +92,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
       onClick={() => (menuopen ? setMenuOpen(false) : "")}
     >
       <header>
-        <div className="bg-gray-100 border-b border-gray-200">
+        <div className="bg-black border-b border-gray-900">
           <div className="px-4 mx-auto sm:px-6 lg:px-8">
             <nav className="relative flex items-center justify-between h-16 lg:h-20">
               <div className="">
@@ -100,12 +100,12 @@ const Header = ({ menuopen, setMenuOpen }) => {
                   <Link to="/" title="" className="flex items-center gap-2">
                     <img
                       className="w-auto h-8 lg:h-10"
-                      src="/gadgetextreme logo.png"
+                      src="/logo.png"
                       alt=""
                     />
                     <div className="flex ">
-                      <h1 className="text-gray-800 lg:text-2xl text-lg font-bold font-tektur uppercase">
-                        Gadgetextreme
+                      <h1 className="text-white lg:text-xl text-lg font-bold font-tektur uppercase">
+                      ভাই দাম কত ? 
                       </h1>
                     </div>
                   </Link>
@@ -119,7 +119,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
               <div className="hidden lg:flex lg:items-center lg:space-x-7">
                 <Link
                   to="/"
-                  className="text-base font-medium text-black capitalize"
+                  className="text-base font-medium text-white capitalize"
                 >
                   Home
                 </Link>
@@ -141,7 +141,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                     >
                       <Link
                         to={`/category/${category.name}`}
-                        className="text-base font-medium text-black flex items-center capitalize"
+                        className="text-base font-medium text-white flex items-center capitalize"
                       >
                         {category.name}
                         {(subCategories[category.name] === null ||
@@ -164,12 +164,12 @@ const Header = ({ menuopen, setMenuOpen }) => {
                       </Link>
 
                       {isHovered && hasSubCategories && (
-                        <div className="absolute left-0 mt-0 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <div className="absolute left-0 mt-0 w-48 bg-gray-900 rounded-md shadow-lg py-1 z-50">
                           {subCategories[category.name].map((subCat) => (
                             <Link
                               key={subCat}
                               to={`/sub-category/${category.name}/${subCat}`}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 capitalize"
+                              className="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-800 capitalize"
                             >
                               {subCat}
                             </Link>
@@ -182,7 +182,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
                 <Link
                   to="/shop"
-                  className="text-base font-medium text-black capitalize"
+                  className="text-base font-medium text-white capitalize"
                 >
                   Shop
                 </Link>
@@ -220,7 +220,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
               <button
                 type="button"
                 onClick={() => setMenuOpen(!menuopen)}
-                className="inline-flex p-2 ml-5 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100 hover:bg-gray-100"
+                className="inline-flex p-2 ml-5 text-white transition-all duration-200 rounded-md lg:hidden focus:bg-gray-900 hover:bg-gray-900"
               >
                 <svg
                   className="w-6 h-6"
@@ -256,14 +256,14 @@ const Header = ({ menuopen, setMenuOpen }) => {
                     {localOrderData && (
                       <Link
                         to="/orders"
-                        className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                        className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600"
                       >
                         See Orders
                       </Link>
                     )}
                     <Link
                       to="/login"
-                      className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                      className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600"
                     >
                       Sign in
                     </Link>
@@ -272,7 +272,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
                 <Link
                   to="/cart"
-                  className="bg-gray-100 flex justify-center items-center mt-[-12px]"
+                  className=" flex justify-center items-center mt-[-12px]"
                 >
                   <div className="relative">
                     <div className="t-0 absolute left-3">
@@ -286,7 +286,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="file: mt-4 h-6 w-6"
+                      className="file: mt-4 h-6 w-6 text-white"
                     >
                       <path
                         strokeLinecap="round"
@@ -303,18 +303,18 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
         {/* Mobile Menu */}
         <nav
-          className={`py-4 bg-white lg:hidden ${menuopen ? "block" : "hidden"}`}
+          className={`py-4 bg-gray-900 lg:hidden ${menuopen ? "block" : "hidden"}`}
         >
           <div className="px-4 mx-auto sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
-              <p className="text-md font-semibold tracking-widest text-gray-black uppercase">
+              <p className="text-md font-semibold tracking-widest text-gray-black uppercase text-white">
                 Menu
               </p>
 
               <button
                 onClick={() => setMenuOpen(false)}
                 type="button"
-                className="inline-flex p-2 text-black transition-all duration-200 rounded-md focus:bg-gray-100 hover:bg-gray-100"
+                className="inline-flex p-2 text-white transition-all duration-200 rounded-md focus:bg-gray-900 hover:bg-gray-900"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -337,7 +337,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
               <div className="flex flex-col space-y-2">
                 <Link
                   to="/"
-                  className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600 capitalize"
+                  className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 capitalize"
                 >
                   Home
                 </Link>
@@ -354,7 +354,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                     <div key={category.id}>
                       <Link
                         to={`/category/${category.name}`}
-                        className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600 flex items-center justify-between capitalize"
+                        className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 flex items-center justify-between capitalize"
                         onClick={(e) =>
                           handleMobileCategoryClick(e, category.name)
                         }
@@ -363,7 +363,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                         {(subCategories[category.name] === null ||
                           hasSubCategories) && (
                             <svg
-                              className={`w-4 h-4 transition-transform ${isExpanded ? "transform rotate-180" : ""
+                              className={`w-4 h-4 text-white transition-transform ${isExpanded ? "transform rotate-180" : ""
                                 }`}
                               fill="none"
                               stroke="currentColor"
@@ -386,7 +386,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                             <Link
                               key={subCat}
                               to={`/sub-category/${category.name}/${subCat}`}
-                              className="block py-2 text-sm text-gray-700 hover:bg-gray-100 capitalize"
+                              className="block py-2 text-sm text-gray-100 hover:bg-gray-900 capitalize"
                               onClick={() => setMenuOpen(false)}
                             >
                               {subCat}
@@ -400,7 +400,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
 
                 <Link
                   to="/shop"
-                  className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600 capitalize"
+                  className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600 capitalize"
                 >
                   Shop
                 </Link>
@@ -412,7 +412,7 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 {user?.user?.uid ? (
                   <Link
                     to="/account"
-                    className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                    className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600"
                   >
                     Account
                   </Link>
@@ -421,21 +421,21 @@ const Header = ({ menuopen, setMenuOpen }) => {
                     {localOrderData && (
                       <Link
                         to="/orders"
-                        className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                        className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600"
                       >
                         See Orders
                       </Link>
                     )}
                     <Link
                       to="/register"
-                      className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                      className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600"
                     >
                       Sign up
                     </Link>
 
                     <Link
                       to="/login"
-                      className="py-2 text-base font-medium text-black transition-all duration-200 focus:text-blue-600"
+                      className="py-2 text-base font-medium text-white transition-all duration-200 focus:text-blue-600"
                     >
                       Sign in
                     </Link>

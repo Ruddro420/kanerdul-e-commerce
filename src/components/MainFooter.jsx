@@ -39,7 +39,7 @@ const MainFooter = () => {
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-y-12 gap-x-8 xl:gap-x-12">
           <div class="col-span-2 md:col-span-4 xl:pr-8">
-            <img class="w-auto h-12" src="/gadgetextreme logo.png" alt="" />
+            <img class="w-auto h-12" src="/logo.png" alt="" />
 
             <p class="text-base leading-relaxed text-gray-200 mt-7">
               Discover the latest tech at Gadgetex – your one-stop shop for
@@ -47,7 +47,7 @@ const MainFooter = () => {
             </p>
 
             <Link
-              to="https://www.facebook.com/messages/t/109673061973728"
+              to="https://web.facebook.com/messages/t/116061797769426/"
               target="_blank"
               class="inline-flex items-center justify-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700 mt-7"
             >
@@ -93,16 +93,16 @@ const MainFooter = () => {
             <ul class="mt-6 space-y-2">
               <li>
                 <a
-                  href="tel:+8801624010673"
+                  href="tel:+8801851003265"
                   target="_blank"
                   class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
-                  <FaPhoneAlt /> +880 1624010673
+                  <FaPhoneAlt /> +880 1851003265
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/profile.php?id=100087762086932"
+                  href="https://web.facebook.com/vai.dam.koto"
                   target="_blank"
                   class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
@@ -111,7 +111,7 @@ const MainFooter = () => {
               </li>
               <li>
                 <a
-                  href="https://wa.me/+8801624010673"
+                  href="https://wa.me/+8801851003265"
                   target="_blank"
                   class="flex items-center gap-2  text-sm font-semibold text-gray-200 transition-all duration-200 hover:text-green-600 focus:text-orange-600"
                 >
@@ -147,12 +147,12 @@ const MainFooter = () => {
 
         <div class="sm:flex sm:items-center justify-center">
           <p class="text-sm text-gray-300">
-            © Copyright 2021, All Rights Reserved by Gadgetextreme
+            © Copyright 2021, All Rights Reserved by Vai Dam Koto
           </p>
         </div>
       </div>
       <div className="fixed bottom-4 right-4 z-50">
-        <Link to={"https://wa.me/+8801624010673"} target="_blank">
+        <Link to={"https://wa.me/+8801851003265"} target="_blank">
           {" "}
           <img src={whatsapp} className="w-18" alt="" />
         </Link>
