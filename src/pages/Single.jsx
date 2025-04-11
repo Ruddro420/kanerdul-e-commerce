@@ -201,7 +201,7 @@ const Single = () => {
                   <div className="flex justify-items-stretch gap-4 lg:-mx-2 mb-4 pt-8">
                     <div className="w-full">
                       {isInCart ? (
-                        <button className="bg-[blue] text-white font-bold h-full rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer w-full">
+                        <button className="bg-[black] text-white font-bold h-full rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer w-full">
                           <Link to="/cart" className="py-2 h-full px-4 w-full">
                             কার্ট দেখুন
                           </Link>
@@ -212,7 +212,7 @@ const Single = () => {
                             addToCart({ ...data, selectedColor });
                             setIsCartOpen(!isCartOpen);
                           }}
-                          className="bg-[blue] text-white font-bold py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer w-full"
+                          className="bg-[black] text-white font-bold py-2 px-4 rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer w-full"
                         >
                           কার্টে রাখুন
                         </button>
@@ -221,13 +221,13 @@ const Single = () => {
                     <div className="w-full">
                       <button
                         onClick={() => orderNow({ ...data, selectedColor })}
-                        className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-yellow-400 hover:text-black transition duration-300 cursor-pointer w-full"
+                        className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-[#ffff00] hover:text-black transition duration-300 cursor-pointer w-full"
                       >
                         অর্ডার করুন
                       </button>
                     </div>
                   </div>
-                  <div className="w-full flex gap-2 my-4">
+                  <div className="w-full my-4">
                     <button
                       onClick={() => orderNow({ ...data, selectedColor })}
                       className="w-full bg-[#F69603] text-black py-2 px-4 font-bold hover:bg-[#f6a503] cursor-pointer flex gap-2 justify-center items-center transition-colors"
@@ -239,14 +239,14 @@ const Single = () => {
                   <div className="w-full flex gap-2">
                     <Link
                       target="_blank"
-                      to="https://wa.me/+8801624010673"
+                      to="https://wa.me/+8801851003265"
                       className="w-full bg-[#25D366] text-white py-2 px-4 font-bold hover:bg-[#25d365d0] cursor-pointer flex gap-2 justify-center items-center transition-colors"
                     >
                       <IoLogoWhatsapp size={25} /> WhatsApp
                     </Link>
                     <Link
                       target="_blank"
-                      to="https://www.facebook.com/messages/t/109673061973728"
+                      to="https://web.facebook.com/messages/t/116061797769426/"
                       className="w-full bg-[#0863F7] text-white py-2 px-4 font-bold hover:bg-[#0864f7c9] cursor-pointer flex gap-2 justify-center items-center transition-colors"
                     >
                       <RiMessengerLine size={25} /> Messenger

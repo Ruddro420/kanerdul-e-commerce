@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
@@ -42,9 +41,9 @@ const OrderSuccess = () => {
           <h2 class="text-xl font-semibold text-gray-900  sm:text-2xl mb-2">
             Thanks for your order!
           </h2>
-          <p class="text-gray-500  mb-6 md:mb-8">
+          <p class="text-gray-800  mb-6 md:mb-8">
             Your order{" "}
-            <a href="#" class="font-medium text-gray-900 hover:underline">
+            <a href="#" class="font-semibold text-gray-900 hover:underline">
               {/* #7564804 */}
             </a>{" "}
             will be processed within 24 hours during working days. We will
@@ -52,50 +51,50 @@ const OrderSuccess = () => {
           </p>
           <div class="space-y-4 sm:space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-6  mb-6 md:mb-8">
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">Date</dt>
-              <dd class="font-medium text-gray-900  sm:text-end">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800 ">Date</dt>
+              <dd class="font-semibold text-gray-900  sm:text-end">
                 {orderDate} {/* if no date it will show todays date */}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800 ">
                 Order ID
               </dt>
-              <dd class="font-medium text-gray-900 sm:text-end">
+              <dd class="font-semibold text-gray-900 sm:text-end">
                 #{order?.client_order_id}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800 ">
                 Payment Method
               </dt>
-              <dd class="font-medium text-gray-900 sm:text-end">
+              <dd class="font-semibold text-gray-900 sm:text-end">
                 {order?.p_method}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800 ">
                 Total Price
               </dt>
-              <dd class="font-medium text-gray-900 sm:text-end">
+              <dd class="font-semibold text-gray-900 sm:text-end">
                 ৳ {order?.total_price}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500">Name</dt>
-              <dd class="font-medium text-gray-900  sm:text-end">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800">Name</dt>
+              <dd class="font-semibold text-gray-900  sm:text-end">
                 {order?.name}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500 ">Address</dt>
-              <dd class="font-medium text-gray-900  sm:text-end">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800 ">Address</dt>
+              <dd class="font-semibold text-gray-900  sm:text-end">
                 {order?.address}
               </dd>
             </dl>
             <dl class="sm:flex items-center justify-between gap-4">
-              <dt class="font-normal mb-1 sm:mb-0 text-gray-500">Phone</dt>
-              <dd class="font-medium text-gray-900  sm:text-end">
+              <dt class="font-bold mb-1 sm:mb-0 text-gray-800">Phone</dt>
+              <dd class="font-semibold text-gray-900  sm:text-end">
                 {order?.phone}
               </dd>
             </dl>
@@ -111,17 +110,17 @@ const OrderSuccess = () => {
             ) : (
               <Link
                 to="/orders"
-                class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none bg-[#2a59ff]"
+                class=" bg-[yellow] text-black focus:ring-4 focus:ring-primary-300 font-bold rounded-lg text-sm px-5 py-2.5 focus:outline-none "
               >
-                Track your order
+                আপনার অর্ডার ট্র্যাক করুন
               </Link>
             )}
 
             <Link
-              to="/"
-              class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
+              to="/shop"
+              class="py-2.5 px-5 text-sm font-bold text-white focus:outline-none bg-black rounded-lg border border-gray-200 hover:bg-[#3e3e3e]  focus:z-10 focus:ring-4 focus:ring-gray-100 "
             >
-              Return to shopping
+              কেনাকাটায় ফিরে যান
             </Link>
           </div>
         </div>

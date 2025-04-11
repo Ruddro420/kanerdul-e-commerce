@@ -117,6 +117,15 @@ const ProductSection = ({ loading, data, className }) => {
   }; */
   console.log(selectedColors);
 
+  const formatUrl = (str) => {
+    if (!str) return 'product'; // Fallback for null/undefined
+    return str
+      .toString() // Ensure it's a string
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/[^a-zA-Z0-9-]/g, '') // Remove special characters
+      .toLowerCase();
+  };
+
   return (
     <>
       <div
@@ -137,7 +146,7 @@ const ProductSection = ({ loading, data, className }) => {
                   key={item.id}
                   className="bg-white border-1 border-gray-100 p-2 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-100"
                 >
-                  <Link to={`/single/${item.id}`}>
+                  <Link to={`/product/${item.id}/${formatUrl(item.product_name)}`}>
                     <img
                       className="w-full lg:h-40 h-36 rounded-lg object-cover"
                       src={
@@ -148,7 +157,8 @@ const ProductSection = ({ loading, data, className }) => {
                       alt={item.product_name}
                     />
                   </Link>
-                  <Link to={`/single/${item.id}`}>
+                  
+                  <Link to={`/product/${item.id}/${formatUrl(item.product_name)}`}>
                     <h3 className="text-lg font-semibold text-gray-800 mt-4">
                       {item.product_name?.substring(0, 15) || "No Name Available"}...
                     </h3>
@@ -187,7 +197,7 @@ const ProductSection = ({ loading, data, className }) => {
                       <div className="flex flex-col gap-2">
                         <Link
                           to="/cart"
-                          className="bg-[blue] text-white font-bold py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer text-center"
+                          className="bg-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer text-center"
                         >
                           কার্ট দেখুন
                         </Link>
@@ -195,7 +205,7 @@ const ProductSection = ({ loading, data, className }) => {
                     ) : (
                       <button
                         onClick={() => {addToCart(item, selectedColors[item.id]); setIsCartOpen(!isCartOpen)}}
-                        className="bg-[blue] text-white font-bold py-2 px-4 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 cursor-pointer text-center"
+                        className="bg-black text-white font-bold py-2 px-4 rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer text-center"
                       >
                         কার্টে রাখুন
                       </button>
@@ -203,7 +213,7 @@ const ProductSection = ({ loading, data, className }) => {
 
                     <button
                       onClick={() => orderNow(item, selectedColors[item.id])}
-                      className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-yellow-400 hover:text-black transition duration-300 cursor-pointer"
+                      className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-[#ffff00] hover:text-black transition duration-300 cursor-pointer"
                     >
                       অর্ডার করুন
                     </button>
@@ -219,3 +229,6 @@ const ProductSection = ({ loading, data, className }) => {
 };
 
 export default ProductSection;
+
+
+

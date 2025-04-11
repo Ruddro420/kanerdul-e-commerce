@@ -39,7 +39,7 @@ const MainFooter = () => {
       <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-y-12 gap-x-8 xl:gap-x-12">
           <div class="col-span-2 md:col-span-4 xl:pr-8">
-            <img class="w-auto h-12" src="/logo.png" alt="" />
+            <Link to="/"><img class="w-auto h-14" src="/logo.png" alt="" /></Link>
 
             <p class="text-base leading-relaxed text-gray-200 mt-7">
               Discover the latest tech at Gadgetex – your one-stop shop for

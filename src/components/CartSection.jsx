@@ -9,6 +9,16 @@ const CartSection = () => {
         removeFromCart,
       } = useContext(CartContext);
       const IMAGE_URL = import.meta.env.VITE_API_IMAGE_URL;
+
+
+      const formatUrl = (str) => {
+        if (!str) return 'product'; // Fallback for null/undefined
+        return str
+          .toString() // Ensure it's a string
+          .replace(/\s+/g, '-') // Replace spaces with hyphens
+          .replace(/[^a-zA-Z0-9-]/g, '') // Remove special characters
+          .toLowerCase();
+      };
     return (
         <div>
             <div className="space-y-6">
@@ -79,7 +89,7 @@ const CartSection = () => {
 
                       <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
                         <Link
-                        to={`/single/${item.id}`}
+                        to={`/product/${item.id}/${formatUrl(item.product_name)}`}
                           className="text-base font-medium text-gray-900 hover:underline"
                         >
                           {item.product_name}

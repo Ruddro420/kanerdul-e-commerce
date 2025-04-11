@@ -99,12 +99,12 @@ const Header = ({ menuopen, setMenuOpen }) => {
                 <div className="flex-shrink-0">
                   <Link to="/" title="" className="flex items-center gap-2">
                     <img
-                      className="w-auto h-8 lg:h-10"
+                      className="w-auto h-8 lg:h-14"
                       src="/logo.png"
                       alt=""
                     />
                     <div className="flex ">
-                      <h1 className="text-white lg:text-xl text-lg font-bold font-tektur uppercase">
+                      <h1 className="text-white lg:text-2xl text-lg font-extrabold  uppercase">
                       ভাই দাম কত ? 
                       </h1>
                     </div>
