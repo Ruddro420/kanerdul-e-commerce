@@ -164,7 +164,7 @@ const Single = () => {
                   <div>
                     <span className="font-bold text-gray-700">Product Description:</span>
                     <div className="text-gray-600 text-sm mt-2">
-                      {data.p_short_des.split(',').map((line, index) => (
+                      {data.p_short_des?.split(',').map((line, index) => (
                         <p key={index} className="mb-1">
                           {line.trim()}
                         </p>
