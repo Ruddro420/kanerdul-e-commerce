@@ -160,7 +160,7 @@ const ProductSection = ({ loading, data, className }) => {
                   
                   <Link to={`/product/${item.id}/${formatUrl(item.product_name)}`}>
                     <h3 className="text-lg font-semibold text-gray-800 mt-4">
-                      {item.product_name?.substring(0, 15) || "No Name Available"}...
+                      {item.product_name?.substring(0, 27) || "No Name Available"}
                     </h3>
                   </Link>
                   <p className="text-sm text-gray-600 mt-1">{item.select_category}</p>

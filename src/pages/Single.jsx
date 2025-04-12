@@ -117,14 +117,22 @@ const Single = () => {
                       src={
                         selectedImg
                           ? `${IMAGE_URL}/admin/product/gallery/${selectedImg}`
-                          : data.product_image
-                            ? `${IMAGE_URL}/admin/product/${data.product_image}`
-                            : "/Placeholder.svg"
+                          : `${IMAGE_URL}/admin/product/${data.product_image}`
                       }
                       alt={data.product_name}
                     />
                   </div>
                   <div className="flex gap-4">
+                    <button
+                      onClick={() => setSelectedImg("")} // Set empty to use main product image
+                      className="w-1/4 h-auto cursor-pointer hover:shadow-sm"
+                    >
+                      <img
+                        src={`${IMAGE_URL}/admin/product/${data.product_image}`}
+                        alt={`Product view`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
                     {data?.image_gallary?.map((item, i) => (
                       <button
                         onClick={() => setSelectedImg(item)}
@@ -182,8 +190,8 @@ const Single = () => {
                             key={index}
                             onClick={() => setSelectedColor(color.code)}
                             className={`w-8 h-8 rounded border-2 transition-all ${selectedColor === color.code
-                                ? "border-black shadow-md"
-                                : "border-gray-300"
+                              ? "border-black shadow-md"
+                              : "border-gray-300"
                               } hover:shadow-sm`}
                             style={{ backgroundColor: color.code }}
                             title={color.name}
