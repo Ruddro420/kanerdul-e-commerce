@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import Loader from "../components/Loader";
 const OrderDtails = () => {
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ const OrderDtails = () => {
       // For guest users, get the specific order from localStorage using the order ID
       const guestOrders = JSON.parse(localStorage.getItem("guestOrders")) || [];
       const specificGuestOrder = guestOrders.find(order => order.order_id === id);
-      
+
       if (specificGuestOrder) {
         setOrderData(specificGuestOrder);
       } else {
@@ -57,11 +57,11 @@ const OrderDtails = () => {
   }, [getUser, BASE_URL, id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (!orderData) {
-    return <div>Order not found</div>;
+    return <Loader />;
   }
 
   const formatUrl = (str) => {
@@ -72,6 +72,9 @@ const OrderDtails = () => {
       .replace(/[^a-zA-Z0-9-]/g, '') // Remove special characters
       .toLowerCase();
   };
+
+  console.log(orderData);
+
 
   return (
     <section class="bg-white py-8 antialiased md:py-8">
@@ -96,7 +99,11 @@ const OrderDtails = () => {
                   Product Name:
                 </dt>
               </dl>
+              
 
+              <dl class="w-1/2  lg:w-1/10 hidden lg:block">
+                <dt class="text-base font-medium text-gray-500 ">Color</dt>
+              </dl>
               <dl class="w-1/2  lg:w-1/10 hidden lg:block">
                 <dt class="text-base font-medium text-gray-500 ">Category</dt>
               </dl>
@@ -115,7 +122,7 @@ const OrderDtails = () => {
                 class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 "
               >
                 <dl class="w-1/2  lg:w-1/10">
-                 
+
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
                     <Link to={`/product/${product.id}/${formatUrl(product.product_name)}`} class="hover:underline">
                       <img
@@ -127,7 +134,7 @@ const OrderDtails = () => {
                   </dd>
                 </dl>
                 <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto mr-6">
-                <dl class="w-1/2  lg:w-1/10 lg:hidden block">
+                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
                     <dt class="text-base font-medium text-gray-500 ">Name</dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
@@ -137,8 +144,26 @@ const OrderDtails = () => {
                   </dd>
                 </dl>
 
+                {product?.selectedColor &&
+
+                  <dl class="w-1/2  lg:w-1/10">
+                    <dl class="w-1/2  lg:w-1/10 lg:hidden block">
+                      <dt class="text-base font-medium text-gray-500 ">Selected Color</dt>
+                    </dl>
+                    <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                      {/* {product?.selectedColor} */}
+                      <div
+                          className={` w-8 h-8 border border-gray-200 rounded hover:shadow-sm cursor-pointer`}
+                          style={{ backgroundColor: product.selectedColor }}
+                        ></div>
+                    </dd>
+                  </dl>
+
+                }
+
+
                 <dl class="w-1/2  lg:w-1/10">
-                <dl class="w-1/2  lg:w-1/10 lg:hidden block">
+                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
                     <dt class="text-base font-medium text-gray-500 ">Category</dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
@@ -147,7 +172,7 @@ const OrderDtails = () => {
                 </dl>
 
                 <dl class="w-1/2  lg:w-1/10">
-                <dl class="w-1/2  lg:w-1/10 lg:hidden block">
+                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
                     <dt class="text-base font-medium text-gray-500 ">Price</dt>
                   </dl>
                   <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
@@ -156,7 +181,7 @@ const OrderDtails = () => {
                 </dl>
 
                 <dl class="w-1/2  lg:w-1/10">
-                <dl class="w-1/2  lg:w-1/10 lg:hidden block">
+                  <dl class="w-1/2  lg:w-1/10 lg:hidden block">
                     <dt class="text-base font-medium text-gray-500 ">Quantity</dt>
                   </dl>
                   <dd class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded text-base px-2.5 py-0.5  font-medium text-gray-900">

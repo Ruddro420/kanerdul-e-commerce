@@ -14,7 +14,7 @@ const Single = () => {
   const [loading, setLoading] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [relatedLoading, setRelatedLoading] = useState(true);
-  const [selectedImg, setSelectedImg] = useState("");
+  const [selectedImg, setSelectedImg] = useState(null);
   const { cart, addToCart, orderNow } = useContext(CartContext);
   const isInCart = cart.some((item) => item.id === data?.id);
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -42,19 +42,22 @@ const Single = () => {
   // Process colors from data
   const colors = data?.color
     ? data.color.split(",").map((color) => ({
-      name: color.trim(),
-      code: getColorCode(color.trim()),
-    }))
+        name: color.trim(),
+        code: getColorCode(color.trim()),
+      }))
     : [];
 
   // Initialize selectedColor state
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] = useState(null);
 
   // Set default color when data loads
   useEffect(() => {
-    if (data && data.color && !selectedColor) {
+    if (data?.color) {
       const firstColor = data.color.split(",")[0].trim();
-      setSelectedColor(getColorCode(firstColor));
+      setSelectedColor({
+        name: firstColor,
+        code: getColorCode(firstColor)
+      });
     }
   }, [data]);
 
@@ -94,8 +97,29 @@ const Single = () => {
     }
   };
 
+  // Handlers for cart actions
+  const handleAddToCart = () => {
+    if (colors.length > 0 && !selectedColor) {
+      alert("Please select a color first");
+      return;
+    }
+    
+    addToCart(data, selectedColor?.code || null);
+    setIsCartOpen(!isCartOpen);
+  };
+
+  const handleOrderNow = () => {
+    if (colors.length > 0 && !selectedColor) {
+      alert("Please select a color first");
+      return;
+    }
+    
+    orderNow(data, selectedColor?.code || null);
+  };
+
   useEffect(() => {
     loadData();
+    setSelectedImg(null);
   }, [id]);
 
   return (
@@ -124,7 +148,7 @@ const Single = () => {
                   </div>
                   <div className="flex gap-4">
                     <button
-                      onClick={() => setSelectedImg("")} // Set empty to use main product image
+                      onClick={() => setSelectedImg("")}
                       className="w-1/4 h-auto cursor-pointer hover:shadow-sm"
                     >
                       <img
@@ -161,6 +185,11 @@ const Single = () => {
                       <span className="text-gray-600 text-xl font-semibold">
                         ৳ {data.selling_price}
                       </span>
+                      {data.regular_price && (
+                        <span className="line-through ml-2 text-red-500 text-sm">
+                          ৳{data.regular_price}
+                        </span>
+                      )}
                     </div>
                     <div>
                       <span className="font-bold text-gray-700">
@@ -180,33 +209,33 @@ const Single = () => {
                     </div>
                   </div>
                   {colors.length > 0 && (
-                    <div>
-                      <span className="font-bold text-gray-700">
-                        Choose Color:
-                      </span>
-                      <div className="flex gap-2 mt-2">
-                        {colors.map((color, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setSelectedColor(color.code)}
-                            className={`w-8 h-8 rounded border-2 transition-all ${selectedColor === color.code
+                  <div className="mt-4">
+                    <span className="font-bold text-gray-700">
+                      Choose Color:
+                    </span>
+                    <div className="flex gap-2 mt-2">
+                      {colors.map((color, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSelectedColor(color)}
+                          className={`w-8 h-8 rounded border-2 transition-all ${
+                            selectedColor?.code === color.code
                               ? "border-black shadow-md"
                               : "border-gray-300"
-                              } hover:shadow-sm`}
-                            style={{ backgroundColor: color.code }}
-                            title={color.name}
-                            aria-label={`Select color ${color.name}`}
-                          />
-                        ))}
-                      </div>
-                      {selectedColor && (
-                        <p className="text-sm text-gray-600 mt-1">
-                          Selected:{" "}
-                          {colors.find((c) => c.code === selectedColor)?.name}
-                        </p>
-                      )}
+                          } hover:shadow-sm`}
+                          style={{ backgroundColor: color.code }}
+                          title={color.name}
+                          aria-label={`Select color ${color.name}`}
+                        />
+                      ))}
                     </div>
-                  )}
+                    {selectedColor && (
+                      <p className="text-sm text-gray-600 mt-1">
+                        Selected: {selectedColor.name}
+                      </p>
+                    )}
+                  </div>
+                )}
                   <div className="flex justify-items-stretch gap-4 lg:-mx-2 mb-4 pt-8">
                     <div className="w-full">
                       {isInCart ? (
@@ -217,10 +246,7 @@ const Single = () => {
                         </button>
                       ) : (
                         <button
-                          onClick={() => {
-                            addToCart({ ...data, selectedColor });
-                            setIsCartOpen(!isCartOpen);
-                          }}
+                          onClick={handleAddToCart}
                           className="bg-[black] text-white font-bold py-2 px-4 rounded-md hover:bg-[#313131] hover:text-white transition duration-300 cursor-pointer w-full"
                         >
                           কার্টে রাখুন
@@ -229,7 +255,7 @@ const Single = () => {
                     </div>
                     <div className="w-full">
                       <button
-                        onClick={() => orderNow({ ...data, selectedColor })}
+                        onClick={handleOrderNow}
                         className="bg-[#ffff00] text-black font-bold py-2 px-4 rounded-md hover:bg-[#ffff00] hover:text-black transition duration-300 cursor-pointer w-full"
                       >
                         অর্ডার করুন
@@ -238,7 +264,7 @@ const Single = () => {
                   </div>
                   <div className="w-full my-4">
                     <button
-                      onClick={() => orderNow({ ...data, selectedColor })}
+                      onClick={handleOrderNow}
                       className="w-full bg-[#F69603] text-black py-2 px-4 font-bold hover:bg-[#f6a503] cursor-pointer flex gap-2 justify-center items-center transition-colors"
                     >
                       <FaCartShopping size={25} /> ক্যাশ অন ডেলিভারিতে অর্ডার
